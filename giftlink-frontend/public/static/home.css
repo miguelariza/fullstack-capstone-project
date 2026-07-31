@@ -1,19 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* Task 1: Style the body */
 body {
-    /* insert code here */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: transparent;
+    padding: 2rem;
+    font-size: 16px;
+    line-height: 1.6;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
 }
 
 /* Task 2: Create a pseudo-element for the background and blur */
 body::before {
-    /* insert code here */
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index:  -1;
+    pointer-events: none;
+
+    /* ——— PEXELS IMAGE (forest / nature) ——— */
+    background: url('https://images.pexels.com/photos/957024/forest-trees-perspective-bright-957024.jpeg?auto=compress&cs=tinysrgb&w=1920') 
+    center center / cover no-repeat;
+
+    /* ——— SOFT BLUR ——— */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    /* ——— WARM OVERLAY FOR EARTHY TONE ——— */
+    box-shadow: inset 0 0 0 2000px rgba(60, 80, 50, 0.3);
 }
 
-/* Task 3: Style the content area */
 .content {
     /* insert code here */
+    position: relative;
+    max-width: 70%;
+    width: 100%;
+    background: rgba(255, 255, 200, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius:  2rem;
+    padding: 2rem 2.5rem;
+    color: #f2efe6;
+    text-align: center;
+    border: 1px solid rgba(220, 200, 170, 0.2);
+    box-shadow: 0 30px 60px -20px rgba(20, 30, 10, 0.7),
+                            inset 0 1px 0 rgba(255, 245, 220, 0.15);
+    transition: all 0.2s ease;
 }
 
 /* Task 4: Add styles for headings, paragraphs, and buttons */
-h1, h2, .lead, .btn-primary {
-    /* insert code here */
+.lead {
+    font-weigth: 100;
+}
+
+.content h4 {
+    font-weigth: 300;
+    color: #22333b;
+}
+
+.content h1 {
+    color: #344e41;
+}
+
+.content .lead {
+    color: #5e503f;
+}
+
+.content .leaf-icon {
+    font-size: 2rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
