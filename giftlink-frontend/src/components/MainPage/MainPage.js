@@ -34,8 +34,12 @@ function MainPage() {
     // Task 3: Format timestamp
     const formatDate = (timestamp) => {
         // Write your code below this line
-        const date = new Date(timestamp);
-        return date.toLocaleDateString();
+        const date = new Date(timestamp * 1000);
+        return date.toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+        });
       };
 
     const getConditionClass = (condition) => {
@@ -49,7 +53,7 @@ function MainPage() {
                     <div key={gift.id} className="col-md-4 mb-4">
                         <div className="card product-card">
                             {/* // Task 4: Display gift image or placeholder */}
-                            <div>
+                            <div className="image-placeholder">
                                 {
                                     gift.image ? (
                                         <img className="card-img-top" src={gift.image} alt={gift.name} />
