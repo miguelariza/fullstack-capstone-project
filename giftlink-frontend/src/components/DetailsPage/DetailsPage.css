@@ -1,36 +1,114 @@
+:root {
+    --dust-grey: #dad7cdff;
+    --dry-sage: #a3b18aff;
+    --fern: #588157ff;
+    --hunter-green: #3a5a40ff;
+    --pine-teal: #344e41ff;
+}
+
+body {
+    background-color: var(--dust-grey);
+    color: var(--pine-teal);
+}
+
 /* Style for image placeholder */
 .image-placeholder-large {
-    /* Task 1 styling */
-    {{insert code here}}
+    background-color: var(--dust-grey);
+    border: 2px dashed var(--dry-sage);
+    border-radius: 8px;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dry-sage);
+    font-size: 1.2rem;
 }
 
 /* Style for product image */
 .product-image-large {
-    /* Task 2 styling */
-    {{insert code here}}
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Style for 'no image available' placeholder */
 .no-image-available-large {
-    /* Task 3 styling */
-    {{insert code here}}
+    background-color: var(--dust-grey);
+    border: 2px solid var(--dry-sage);
+    border-radius: 8px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--dry-sage);
+    font-size: 1.2rem;
+}
+
+.no-image-available-large i {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: var(--fern);
 }
 
 /* Style for card header */
 .card-header {
-    /* Task 4 styling */
-    {{insert code here}}
+    background-color: var(--hunter-green);
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 15px 20px;
+    border-radius: 8px 8px 0 0 !important;
 }
 
 /* Style for details title */
 .details-title {
-    /* Task 5 styling */
-    {{insert code here}}
+    color: var(--hunter-green);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
 }
 
 /* Style for comments section */
 .comments-section {
-    /* Task 6 styling */
-    {{insert code here}}
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    border-left: 4px solid var(--fern);
 }
 
+.comments-section h4 {
+    color: var(--hunter-green);
+    font-weight: 600;
+}
+
+.comment-text {
+    color: var(--pine-teal);
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.comment-author {
+    color: var(--fern);
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* Additional Bootstrap overrides for badges and buttons */
+.badge-bg-dry-sage {
+    background-color: var(--dry-sage);
+    color: var(--pine-teal);
+}
+
+.badge-bg-fern {
+    background-color: var(--fern);
+    color: white;
+}
+
+.btn-fern {
+    background-color: var(--fern);
+    color: white;
+}

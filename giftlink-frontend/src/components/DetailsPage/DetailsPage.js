@@ -13,21 +13,35 @@ function DetailsPage() {
         const authenticationToken = sessionStorage.getItem('auth-token');
         if (!authenticationToken) {
 			// Task 1: Check for authentication and redirect
-            {{insert code here}}
+            console.error("No token available. No information available.");
+            navigate('/app/login');
         }
 
         // get the gift to be rendered on the details page
         const fetchGift = async () => {
             try {
 				// Task 2: Fetch gift details
-                const response ={{insert code here}}
+                let url = `${urlConfig.backendUrl}/api/gifts/${productId}`;
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${authenticationToken}`
+                    }
+                });
+
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    if (response.status === 404) {
+                        setError('User not found.');
+                    } else if (response.status === 401) {
+                        sessionStorage.removeItem('auth-token');
+                        setError('Unauthorized access');
+                    } else {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
                 }
                 const data = await response.json();
                 setGift(data);
-            } catch (error) {
-                setError(error.message);
+            } catch (err) {
+                setError(err.message);
             } finally {
                 setLoading(false);
             }
@@ -36,14 +50,17 @@ function DetailsPage() {
         fetchGift();
 
 		// Task 3: Scroll to top on component mount
-		{{ insert code here }}
+		window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
 
     }, [productId]);
 
 
     const handleBackClick = () => {
 		// Task 4: Handle back click
-		{{ insert code here }}
+		navigate(-1);
 	};
 
 	//The comments have been hardcoded for this project.
@@ -84,35 +101,37 @@ return (
                 </div>
                 <div className="card-body">
                     <div className="image-placeholder-large">
-                        {gift.image ? (
-			// Task 5: Display gift image
-			/*insert code here*/
-                        ) : (
-                            <div className="no-image-available-large">No Image Available</div>
-                        )}
+                        {/* Task 5: Display gift image */}
+                        {
+                            gift.image ? (
+                                <img className="product-image-large" src={gift.image} alt={gift.name} />
+                            ) : (
+                                <div className="no-image-available-large">No image available</div>
+                            )
+                        }
                     </div>
-                    // Task 6: Display gift details
-                    	<p><strong>Category:</strong> 
-				{/* insert code here  */}
-			</p>
-                    	<p><strong>Condition:</strong> 
-				{/* insert code here  */}
-                    	</p>
-                    	<p><strong>Date Added:</strong> 
-				{/* insert code here  */}
-                        </p>
-                    	<p><strong>Age (Years):</strong> 
-				{/* insert code here  */}
-                    	</p>
-                    	<p><strong>Description:</strong> 
-				{/* insert code here  */}
-                    	</p>
+                    {/* Task 6: Display gift details */}
+                    <p><strong>Category:</strong> 
+                        {gift.category}
+                    </p>
+                    <p><strong>Condition:</strong> 
+                        {gift.condition}
+                    </p>
+                    <p><strong>Date Added:</strong> 
+                        {gift.date_added}
+                    </p>
+                    <p><strong>Age (Years):</strong> 
+                        {gift.age_years}
+                    </p>
+                    <p><strong>Description:</strong> 
+                        {gift.description}
+                    </p>
                 </div>
             </div>
             <div className="comments-section mt-4">
                 <h3 className="mb-3">Comments</h3>
 				// Task 7: Render comments section by using the map function to go through all the comments
-				{{ insert code here }} => (
+                {comments.map((comment, index) => (
                     <div key={index} className="card mb-3">
                         <div className="card-body">
                             <p className="comment-author"><strong>{comment.author}:</strong></p>
