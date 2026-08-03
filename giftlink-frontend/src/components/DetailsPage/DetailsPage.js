@@ -55,7 +55,7 @@ function DetailsPage() {
             behavior: 'smooth'
         });
 
-    }, [productId]);
+    }, [productId, navigate]);
 
 
     const handleBackClick = () => {
