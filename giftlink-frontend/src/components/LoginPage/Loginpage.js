@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './RegisterPage.css';
+import './LoginPage.css';
 
-function RegisterPage() {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleRegister = async () => {
-        console.log("Register invoked.");
+    const handleLogin = async () => {
+        console.log("Login invoked.");
     };
 
     return (
@@ -21,38 +19,8 @@ function RegisterPage() {
 
                 {/* Heading and subtitle */}
                 <div className="mb-1">
-                    <h2 className="h3 fw-semibold text-dark">Create your account</h2>
-                    <p className="text-secondary-emphasis small">Join our community in just a few steps.</p>
-                </div>
-
-                {/* First Name */}
-                <div className='form-group'>
-                    <label htmlFor='firstName'>First Name</label>
-                    <input
-                        className='form-control form-control-lg'
-                        type='text'
-                        placeholder="Enter your first name"
-                        id='firstName'
-                        name='firstName'
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        required
-                    />
-                </div>
-
-                {/* Last Name */}
-                <div className='form-group'>
-                    <label htmlFor='lastName'>Last Name</label>
-                    <input
-                        className="form-control form-control-lg"
-                        type='text'
-                        placeholder="Enter your last name"
-                        id='lastName'
-                        name='lastName'
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        required
-                    />
+                    <h2 className="h3 fw-semibold text-dark">Sign in</h2>
+                    <p className="text-secondary-emphasis small">Enter your credentials to log in.</p>
                 </div>
 
                 {/* Email */}
@@ -86,15 +54,15 @@ function RegisterPage() {
                 </div>
 
                 {/* Submit button */}
-                <a href="#" type="submit" onClick={handleRegister} className='btn btn-custom-primary'>Register</a>
+                <a href="#" type="submit" onClick={handleLogin} className='btn btn-custom-primary'>Register</a>
             
                 {/* footnote with link */}
                 <div className="form-footnote text-center small text-secondary mt-2">
-                    Already a member? <a href='/app/login'>Login</a>
+                    New here? <a href='/app/register'>Register here</a>
                 </div>
             </form>
         </div>
     );
 };
 
-export default RegisterPage;
+export default LoginPage;
