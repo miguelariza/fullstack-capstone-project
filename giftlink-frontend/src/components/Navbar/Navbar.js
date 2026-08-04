@@ -1,8 +1,9 @@
 import React from 'react';
+import './Navbar.css';
 
 export default function Navbar() {
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark">
+        <nav className="navbar navbar-expand-lg navbar-light">
             <div className="container">
                 {/* Brand */}
                 <a className="navbar-brand" href="#">
@@ -16,17 +17,23 @@ export default function Navbar() {
 
                 {/* Navbar Links */}
                 <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav me-auto">
+                    <ul className="navbar-nav mx-auto">
                         <li className="nav-item">
                             <a className="nav-link active" href="/home.html">Home</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="/app">Gifts</a>
                         </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/app/register">Register</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/app/search">Search</a>
+                        </li>
                     </ul>
 
                     {/* Search Button */}
-                    <a href="/app/search" className="btn btn-search">Search</a>
+                    <a href="/app/login" className="btn btn-search">Login</a>
                 </div>
             </div>
         </nav>

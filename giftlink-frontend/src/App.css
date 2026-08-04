@@ -15,58 +15,9 @@ body {
     font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--dust-grey);
     color: var(--pine-teal);
-    height: 100%;
+    margin: 0;
+    padding: 0;
 }
-
-/* Navbar styling */
-        .navbar {
-            background-color: var(--hunter-green);
-            padding: 10px 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .navbar-brand i {
-            color: var(--fern);
-            margin-right: 8px;
-        }
-
-        .nav-link {
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin: 0 10px;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover {
-            color: var(--fern);
-        }
-
-        .nav-link.active {
-            color: var(--fern);
-            font-weight: 600;
-        }
-
-        .btn-search {
-            background-color: var(--fern);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-
-        .btn-search:hover {
-            background-color: var(--pine-teal);
-            color: white;
-        }
 
 /* Primary color for headers and important buttons */
 .custom-card-title,
@@ -82,7 +33,6 @@ body {
 }
 
 /* General background color */
-body,
 .page-background {
   background-color: var(--dust-grey); /* Replaces #f4f4f4 */
   margin-right: calc(100vw - 100%);
@@ -111,7 +61,8 @@ body,
 }
 
 .container {
-  padding: 2rem 15%; /* Adds more space on the sides */
+  padding: 0;
+  background-color: blue;
 }
 
 .row {
@@ -187,69 +138,4 @@ body,
 
 .list-group-item-warning {
   color: var(--palm-leaf); /* Replaces #ffc107 */
-}
-
-/* Customize the navbar brand and links */
-.navbar-brand, .nav-link {
-  font-size: 1.2rem; /* Increase font size */
-  font-weight: 500; /* Medium weight for better visibility */
-}
-
-/* Increase the font size and weight of nav-item */
-.nav-item .nav-link {
-  font-size: 1.1rem; /* Larger font size for nav links */
-  font-weight: bold; /* Bold font weight for emphasis */
-  color: var(--hunter-green); /* Replaces #0056b3 */
-}
-
-/* Change the background color of the navbar */
-.navbar {
-  background-color: var(--dust-grey); /* Replaces #f8f9fa */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* A subtle shadow for depth */
-}
-
-/* Add a hover effect to nav links */
-.nav-item .nav-link:hover {
-  color: var(--pine-teal); /* Replaces #004085 */
-  text-decoration: none; /* Optional: Removes the underline on hover */
-}
-
-/* Highlight the active nav link */
-.nav-item.active .nav-link, .nav-item .nav-link.active {
-  color: var(--fern); /* Replaces #d63384 */
-  background-color: transparent; /* Optional: Adds a background color to the active link */
-  text-decoration: underline; /* Underlines the active link */
-  font-weight: bold; /* Makes the active link bold */
-}
-
-/* Style for login button */
-.nav-link.login-btn {
-  background-color: var(--fern); /* Replaces #28a745 */
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.nav-link.login-btn:hover,
-.nav-link.login-btn:focus {
-  background-color: var(--hunter-green); /* Replaces #218838 */
-  color: white;
-  text-decoration: none;
-}
-
-/* Style for logout button */
-.nav-link.logout-btn {
-  background-color: var(--pine-teal); /* Replaces #dc3545 */
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.nav-link.logout-btn:hover,
-.nav-link.logout-btn:focus {
-  background-color: var(--hunter-green); /* Replaces #c82333 */
-  color: white;
-  text-decoration: none;
 }

@@ -48,7 +48,7 @@ function MainPage() {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="mt-5">
             <div className="row">
                 {gifts.map((gift) => (
                     <div key={gift.id} className="col-md-4 mb-4">

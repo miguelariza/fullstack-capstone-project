@@ -1,10 +1,19 @@
+:root {
+    --dust-grey: #dad7cdff;
+    --dry-sage: #a3b18aff;
+    --fern: #588157ff;
+    --hunter-green: #3a5a40ff;
+    --pine-teal: #344e41ff;
+}
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dust-grey);
+    color: var(--pine-teal);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
