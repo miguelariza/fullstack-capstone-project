@@ -9,6 +9,12 @@ function SearchPage() {
     const categories = ['Living', 'Bedroom', 'Bathroom', 'Kitchen', 'Office'];
     const conditions = ['New', 'Like New', 'Older'];
 
+    const [ selectCategory, setSelectCategory ] = useState('');
+    const [ selectCondition, setSelectCondition ] = useState('');
+    const [ searchQuery, setSearchQuery ] = useState('');
+    const [ ageRange, setAgeRange ] = useState({min: 1, max: 10});
+    const [ searchResults, setSearchResults ] = useState([]);
+
     useEffect(() => {
         // fetch all products
         const fetchProducts = async () => {
@@ -30,8 +36,30 @@ function SearchPage() {
         fetchProducts();
     }, []);
 
-
     // Task 2. Fetch search results from the API based on user inputs.
+    useEffect(() => {
+        const filteredProducts = setSearchResults.filter((product) => {
+            const matchSearchQuery =
+                searchQuery === ''
+                    ||
+                product.name.toLowerCase().includes(searchQuery.toLowerCase())
+                    ||
+                product.description.toLowerCase().includes(searchQuery.toLowerCase());
+
+            const matchCategory =
+                selectCategory === '' || selectCategory === product.category;
+
+            const matchCondition =
+                selectCondition === '' || selectCondition === product.condition;
+
+            const matchAgeRange =
+                product.age_years <= ageRange;
+
+            return matchSearchQuery && matchCategory && matchCondition && matchAgeRange;
+        });
+
+        setSearchResults(filteredProducts);
+    }, [searchQuery, selectCategory, selectCondition, ageRange]);
 
     const navigate = useNavigate();
 
