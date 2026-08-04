@@ -117,7 +117,7 @@ function SearchPage() {
                             {/* Task 4: Implement an age range slider and display the selected value. */}
                             <div className="mb-3">
                                 <label for="range1" className="form-label">Chronological Age</label>
-                                <input type="range" class="form-range" min="0" max="10" value="1" id="range4">
+                                <input type="range" className="form-range" min="0" max="10" value="1" id="range4"></input>
                                 Less than <output for="range1" id="rangeValue" aria-hidden="true"></output> years.
                             </div>
                         </div>
@@ -168,13 +168,13 @@ function SearchPage() {
                                         {/* // Write your code below this line */}
                                         <h5 className="card-title">{gift.name}</h5>
 
-                                        <p className={`card-text ${getConditionClass(gift.condition)}`}>
+                                        <p className="card-text">
                                         {gift.condition}
                                         </p>
 
                                         {/* // Task 6: Display gift image or placeholder */}
                                         {/* // Write your code below this line */}
-                                        <p className="card-text">{formatDate(gift.date_added)}</p>
+                                        <p className="card-text">{gift.date_added}</p>
 
                                         <button onClick={() => goToDetailsPage(gift.id)} className="btn btn-primary">
                                             View Details
