@@ -1,26 +1,150 @@
+/* Color Palette */
+:root {
+    --dust-grey: #dad7cdff;
+    --dry-sage: #a3b18aff;
+    --fern: #588157ff;
+    --hunter-green: #3a5a40ff;
+    --pine-teal: #344e41ff;
+}
+
 /* Task 1: Style the search input field */
 .search-input {
-    /* Insert specific CSS properties here */
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--dry-sage);
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: white;
+    color: var(--pine-teal);
+    transition: border-color 0.3s;
+}
+
+.search-input:focus {
+    border-color: var(--fern);
+    box-shadow: 0 0 0 0.25rem rgba(88, 129, 87, 0.25);
+    outline: none;
 }
 
 /* Task 2: Style the search button */
 .search-button {
-    /* Insert specific CSS properties here */
+    background-color: var(--fern);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: var(--hunter-green);
 }
 
 /* Task 3: Customize dropdown filters */
 .dropdown-filter {
-    /* Insert specific CSS properties here */
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--dry-sage);
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: white;
+    color: var(--pine-teal);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23344e41ff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 1.885 4.082 2.451 3.437L7.247 0c.566-.566 1.544-.566 2.11 0l4.796 4.796c.566.566.566 1.544 0 2.11L9.357 11.14c-.566.566-1.544.566-2.11 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    transition: border-color 0.3s;
+}
+
+.dropdown-filter:focus {
+    border-color: var(--fern);
+    box-shadow: 0 0 0 0.25rem rgba(88, 129, 87, 0.25);
+    outline: none;
 }
 
 /* Task 4: Style the age range slider */
 .age-range-slider {
-    /* Insert specific CSS properties here */
+    width: 100%;
+    height: 6px;
+    border-radius: 5px;
+    background: var(--dry-sage);
+    outline: none;
+    -webkit-appearance: none;
+    margin: 15px 0;
+}
+
+.age-range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--fern);
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.age-range-slider::-webkit-slider-thumb:hover {
+    background: var(--hunter-green);
+}
+
+.age-range-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--fern);
+    cursor: pointer;
+    border: none;
+}
+
+.age-range-slider::-moz-range-thumb:hover {
+    background: var(--hunter-green);
 }
 
 /* Task 5: Enhance search results cards appearance */
 .search-results-card {
-    /* Insert specific CSS properties here */
+    background-color: white;
+    border: 1px solid var(--dry-sage);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Additional placeholders for tasks 6 to 10 */
+.search-results-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.search-results-card .card-title {
+    color: var(--hunter-green);
+    font-weight: 600;
+}
+
+.search-results-card .card-text {
+    color: var(--pine-teal);
+}
+
+/* Additional styles for card structure */
+.search-options-card {
+    background-color: white;
+    border: 1px solid var(--dry-sage);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.search-options-card .card-title {
+    color: var(--hunter-green);
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.search-options-card .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}

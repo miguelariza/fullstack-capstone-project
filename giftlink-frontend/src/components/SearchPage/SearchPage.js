@@ -12,8 +12,10 @@ function SearchPage() {
     const [ selectCategory, setSelectCategory ] = useState('');
     const [ selectCondition, setSelectCondition ] = useState('');
     const [ searchQuery, setSearchQuery ] = useState('');
-    const [ ageRange, setAgeRange ] = useState({min: 1, max: 10});
+    const [ ageRange, setAgeRange ] = useState(1);
     const [ searchResults, setSearchResults ] = useState([]);
+    const [ loading, setLoading ] = useState(true);
+    const [ error, setError ] = useState(null);
 
     useEffect(() => {
         // fetch all products
@@ -28,8 +30,10 @@ function SearchPage() {
                 }
                 const data = await response.json();
                 setSearchResults(data);
-            } catch (error) {
-                console.log('Fetch error: ' + error.message);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -37,7 +41,7 @@ function SearchPage() {
     }, []);
 
     // Task 2. Fetch search results from the API based on user inputs.
-    useEffect(() => {
+    const handleSearch = () => {
         const filteredProducts = setSearchResults.filter((product) => {
             const matchSearchQuery =
                 searchQuery === ''
@@ -59,16 +63,16 @@ function SearchPage() {
         });
 
         setSearchResults(filteredProducts);
-    }, [searchQuery, selectCategory, selectCondition, ageRange]);
-
-    const navigate = useNavigate();
-
-    const goToDetailsPage = (productId) => {
-        // Task 6. Enable navigation to the details page of a selected gift.
     };
 
+    const navigate = useNavigate();
+    const goToDetailsPage = (productId) => {
+        // Task 6. Enable navigation to the details page of a selected gift.
+        navigate(`/app/product/${productId}`);
+    };
 
-
+  if (loading) return <div>Loading products...</div>;
+  if (error) return <div>Error: {error}</div>;
 
     return (
         <div className="container mt-5">
@@ -119,7 +123,24 @@ function SearchPage() {
                         </div>
                     </div>
                     {/* Task 7: Add text input field for search criteria*/}
+                    <div className='mb-3'>
+                        <input
+                            className='form-control form-control-lg'
+                            type='text'
+                            placeholder="Add another search criteria"
+                            id='searchQuery'
+                            name='searchQuery'
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            required
+                        />
+                    </div>
                     {/* Task 8: Implement search button with onClick event to trigger search:*/}
+                    <div className="mb-5">
+                        <button onClick={handleSearch} className="btn btn-primary">
+                            Search
+                        </button>
+                    </div>
                     {/*Task 5: Display search results and handle empty results with a message. */}
                     {searchResults.length === 0 ? (
                         <div className="mb-1">
