@@ -48,43 +48,43 @@ function MainPage() {
     };
 
     return (
-        <div className="mt-5">
-            <div className="row">
-                {gifts.map((gift) => (
-                    <div key={gift.id} className="col-md-4 mb-4">
-                        <div className="card product-card">
-                            {/* // Task 4: Display gift image or placeholder */}
-                            <div className="image-placeholder">
-                                {
-                                    gift.image ? (
-                                        <img className="card-img-top" src={gift.image} alt={gift.name} />
-                                    ) : (
-                                        <div>No image available</div>
-                                    )
-                                }
-                            </div>
-                            <div className="card-body">
+        <div className="container my-5">
+                <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {gifts.map((gift) => (
+                        <div key={gift.id} className="col-md-4 mb-4">
+                            <div className="card product-card">
+                                {/* // Task 4: Display gift image or placeholder */}
+                                <div className="image-placeholder">
+                                    {
+                                        gift.image ? (
+                                            <img className="card-img-top" src={gift.image} alt={gift.name} />
+                                        ) : (
+                                            <div>No image available</div>
+                                        )
+                                    }
+                                </div>
+                                <div className="card-body">
 
-                                {/* // Task 5: Display gift image or placeholder */}
-                                {/* // Write your code below this line */}
-                                <h5 className="card-title">{gift.name}</h5>
+                                    {/* // Task 5: Display gift image or placeholder */}
+                                    {/* // Write your code below this line */}
+                                    <h5 className="card-title">{gift.name}</h5>
 
-                                <p className={`card-text ${getConditionClass(gift.condition)}`}>
-                                {gift.condition}
-                                </p>
+                                    <p className={`card-text ${getConditionClass(gift.condition)}`}>
+                                    {gift.condition}
+                                    </p>
 
-                                {/* // Task 6: Display gift image or placeholder */}
-                                {/* // Write your code below this line */}
-                                <p className="card-text">{formatDate(gift.date_added)}</p>
+                                    {/* // Task 6: Display gift image or placeholder */}
+                                    {/* // Write your code below this line */}
+                                    <p className="card-text">{formatDate(gift.date_added)}</p>
 
-                                <button onClick={() => goToDetailsPage(gift.id)} className="btn btn-primary">
-                                    View Details
-                                </button>
+                                    <button onClick={() => goToDetailsPage(gift.id)} className="btn btn-primary">
+                                        View Details
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
         </div>
     );
 }

@@ -7,16 +7,10 @@
     --pine-teal: #344e41ff;
 }
 
-html {
-  overflow-y: scroll;
-}
-
 body {
     font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--dust-grey);
+    background-color: yellowgreen;
     color: var(--pine-teal);
-    margin: 0;
-    padding: 0;
 }
 
 /* Primary color for headers and important buttons */
@@ -58,11 +52,6 @@ body {
 .text-success,
 .btn-success {
   color: var(--fern); /* Replaces #28a745 */
-}
-
-.container {
-  padding: 0;
-  background-color: blue;
 }
 
 .row {

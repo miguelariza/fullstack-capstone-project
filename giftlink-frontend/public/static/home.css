@@ -62,11 +62,11 @@ body::before {
 
 /* Task 4: Add styles for headings, paragraphs, and buttons */
 .lead {
-    font-weigth: 100;
+    font-weight: 100;
 }
 
 .content h4 {
-    font-weigth: 300;
+    font-weight: 300;
     color: #22333b;
 }
 

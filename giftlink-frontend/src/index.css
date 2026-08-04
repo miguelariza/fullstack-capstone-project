@@ -8,8 +8,6 @@
 
 body {
     font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--dust-grey);
-    color: var(--pine-teal);
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
