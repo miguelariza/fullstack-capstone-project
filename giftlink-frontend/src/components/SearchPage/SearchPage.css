@@ -1,12 +1,3 @@
-/* Color Palette */
-:root {
-    --dust-grey: #dad7cdff;
-    --dry-sage: #a3b18aff;
-    --fern: #588157ff;
-    --hunter-green: #3a5a40ff;
-    --pine-teal: #344e41ff;
-}
-
 /* Task 1: Style the search input field */
 .search-input {
     width: 100%;
@@ -100,51 +91,4 @@
 
 .age-range-slider::-moz-range-thumb:hover {
     background: var(--hunter-green);
-}
-
-/* Task 5: Enhance search results cards appearance */
-.search-results-card {
-    background-color: white;
-    border: 1px solid var(--dry-sage);
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.search-results-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.search-results-card .card-title {
-    color: var(--hunter-green);
-    font-weight: 600;
-}
-
-.search-results-card .card-text {
-    color: var(--pine-teal);
-}
-
-/* Additional styles for card structure */
-.search-options-card {
-    background-color: white;
-    border: 1px solid var(--dry-sage);
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.search-options-card .card-title {
-    color: var(--hunter-green);
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-.search-options-card .card-body {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
 }

@@ -76,11 +76,10 @@ function MainPage() {
                                     {/* // Task 6: Display gift image or placeholder */}
                                     {/* // Write your code below this line */}
                                     <p className="card-text">{formatDate(gift.date_added)}</p>
-
-                                    <button onClick={() => goToDetailsPage(gift.id)} className="btn btn-primary">
-                                        View Details
-                                    </button>
                                 </div>
+                                <button onClick={() => goToDetailsPage(gift.id)} className="btn btn-primary">
+                                        View Details
+                                </button>
                             </div>
                         </div>
                     ))}
