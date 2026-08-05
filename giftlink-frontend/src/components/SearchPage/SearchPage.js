@@ -75,9 +75,9 @@ function SearchPage() {
   if (error) return <div>Error: {error}</div>;
 
     return (
-        <div className="container mt-5">
-            <div className="row justify-content-center">
-                <div className="col-md-6">
+        <div className="container-fluid mt-5">
+            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div className="col-md-4">
                     <div className="filter-section mb-3 p-3 border rounded">
                         <h5>Filters</h5>
                         <div className="d-flex flex-column">
@@ -147,42 +147,48 @@ function SearchPage() {
                             <p>No products match your criteria</p>
                         </div>
                     ) : (
-                        <div className="row">
-                            <h2 className="h3 fw-semibold text-dark">{searchResults.length} Search results</h2>
-                            {searchResults.map((gift) => (
-                            <div key={gift.id} className="col-md-4 mb-4">
-                                <div className="card product-card">
-                                    {/* // Task 4: Display gift image or placeholder */}
-                                    <div className="image-placeholder">
-                                        {
-                                            gift.image ? (
-                                                <img className="card-img-top" src={gift.image} alt={gift.name} />
-                                            ) : (
-                                                <div>No image available</div>
-                                            )
-                                        }
-                                    </div>
-                                    <div className="card-body">
+                        <div className="container-fluid my-5">
+                            <div className='row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4'>
+                                <div className="col-md-4">
+                                    <div className="row">
+                                        <h2 className="h3 fw-semibold text-dark">{searchResults.length} Search results</h2>
+                                        {searchResults.map((gift) => (
+                                        <div key={gift.id} className="col-md-4 mb-4">
+                                            <div className="card product-card">
+                                                {/* // Task 4: Display gift image or placeholder */}
+                                                <div className="image-placeholder">
+                                                    {
+                                                        gift.image ? (
+                                                            <img className="card-img-top" src={gift.image} alt={gift.name} />
+                                                        ) : (
+                                                            <div>No image available</div>
+                                                        )
+                                                    }
+                                                </div>
+                                                <div className="card-body">
 
-                                        {/* // Task 5: Display gift image or placeholder */}
-                                        {/* // Write your code below this line */}
-                                        <h5 className="card-title">{gift.name}</h5>
+                                                    {/* // Task 5: Display gift image or placeholder */}
+                                                    {/* // Write your code below this line */}
+                                                    <h5 className="card-title">{gift.name}</h5>
 
-                                        <p className="card-text">
-                                        {gift.condition}
-                                        </p>
+                                                    <p className="card-text">
+                                                    {gift.condition}
+                                                    </p>
 
-                                        {/* // Task 6: Display gift image or placeholder */}
-                                        {/* // Write your code below this line */}
-                                        <p className="card-text">{gift.date_added}</p>
+                                                    {/* // Task 6: Display gift image or placeholder */}
+                                                    {/* // Write your code below this line */}
+                                                    <p className="card-text">{gift.date_added}</p>
 
-                                        <button onClick={() => goToDetailsPage(gift.id)} className="btn btn-primary">
-                                            View Details
-                                        </button>
+                                                    <button onClick={() => goToDetailsPage(gift.id)} className="btn btn-primary">
+                                                        View Details
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
-                            ))}
                         </div>
                     )}
                 </div>
