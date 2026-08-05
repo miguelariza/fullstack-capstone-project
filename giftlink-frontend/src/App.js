@@ -10,12 +10,19 @@ import './App.css';
 import Navbar from './components/Navbar/Navbar';
 
 function App() {
-    const navigate = useNavigate();
   return (
     <>
-        <div>Texto</div>
-        
-        </>
+        <Navbar/>
+        <Routes>
+          {/* the final code will not pass the products to every page, but each page will call the server API */}
+          <Route path="/" element={<MainPage />} />
+          <Route path="/app" element={<MainPage />} />
+          <Route path="/app/register" element={<RegisterPage />} />
+          <Route path="/app/login" element={<LoginPage />} />
+          <Route path="/app/product/:productId" element={<DetailsPage />} />
+          <Route path="/app/search" element={<SearchPage />} />
+        </Routes>    
+    </>
   );
 }
 

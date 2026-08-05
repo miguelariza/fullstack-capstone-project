@@ -18,8 +18,8 @@ function MainPage() {
                 }
                 const result = await response.json();
                 setGifts(result);
-            } catch(err) {
-                setError(err.message);
+            } catch(error) {
+                setError(error.message);
             }
         };
 
@@ -51,7 +51,7 @@ function MainPage() {
         <div className="container my-5">
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                     {gifts.map((gift) => (
-                        <div key={gift.id} className="col-md-4 mb-4">
+                        <div key={gift.id} className="col-md-4">
                             <div className="card product-card">
                                 {/* // Task 4: Display gift image or placeholder */}
                                 <div className="image-placeholder">
@@ -59,7 +59,7 @@ function MainPage() {
                                         gift.image ? (
                                             <img className="card-img-top" src={gift.image} alt={gift.name} />
                                         ) : (
-                                            <div>No image available</div>
+                                            <div className="no-image-available">No image available</div>
                                         )
                                     }
                                 </div>
