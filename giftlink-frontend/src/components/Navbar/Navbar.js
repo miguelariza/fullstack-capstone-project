@@ -16,23 +16,23 @@ export default function Navbar() {
 
                 {/* Navbar-links */}
                 <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav mx-auto">
-                        <li classNameName="nav-item">
-                            <a classNameName="nav-link active" href="/home.html">Home</a>
+                    <ul className="navbar-nav ms-auto">
+                        <li className="nav-item">
+                            <a className="nav-link" href="/home.html">Home</a>
                         </li>
-                        <li classNameName="nav-item">
-                            <a classNameName="nav-link" href="/app">Gifts</a>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/app">Gifts</a>
                         </li>
-                        <li classNameName="nav-item">
-                            <a classNameName="nav-link" href="/app/register">Register</a>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/app/register">Register</a>
                         </li>
-                        <li classNameName="nav-item">
-                            <a classNameName="nav-link" href="/app/search">Search</a>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/app/search">Search</a>
                         </li>
                     </ul>
 
                     {/* Login */}
-                    <a href="/app/login" classNameName="btn btn-search">Login</a>
+                    <a href="/app/login" className="btn btn-search">Login</a>
                 </div>
             </div>
         </nav>

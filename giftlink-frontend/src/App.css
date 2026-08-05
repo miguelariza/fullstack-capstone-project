@@ -139,26 +139,26 @@ body {
   color: var(--dry-sage); /* Replaces #ffc107 */
 }
 
+/* Change the background color of the navbar */
+.navbar {
+  background-color: var(--hunter-green); /* Replaces #f8f9fa */
+  padding: 10px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* A subtle shadow for depth */
+}
+
 /* Customize the navbar brand and links */
 .navbar-brand, .nav-link {
-  font-size: 1.2rem; /* Increase font size */
+  font-size: 1.3rem; /* Increase font size */
   font-weight: 500; /* Medium weight for better visibility */
   margin: 0px 10px;
 }
 
 /* Increase the font size and weight of nav-item */
 .nav-item .nav-link {
-  font-size: 1.1rem; /* Larger font size for nav links */
+  font-size: 1rem; /* Larger font size for nav links */
   font-weight: bold; /* Bold font weight for emphasis */
   color: white; /* Replaces #0056b3 */
-  margin: 0 10px;
-  padding: 0px 10px;
-}
-
-/* Change the background color of the navbar */
-.navbar {
-  background-color: var(--hunter-green); /* Replaces #f8f9fa */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* A subtle shadow for depth */
+  margin: 0 3px;
 }
 
 /* Add a hover effect to nav links */
@@ -171,7 +171,7 @@ body {
 .nav-item.active .nav-link, .nav-item .nav-link.active {
   color: var(--fern); /* Replaces #d63384 */
   background-color: transparent; /* Optional: Adds a background color to the active link */
-  text-decoration: underline; /* Underlines the active link */
+  /* text-decoration: underline; Underlines the active link */
   font-weight: bold; /* Makes the active link bold */
 }
 

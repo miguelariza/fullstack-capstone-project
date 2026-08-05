@@ -52,7 +52,7 @@ function MainPage() {
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                     {gifts.map((gift) => (
                         <div key={gift.id} className="col-md-4">
-                            <div className="card product-card">
+                            <div className="card product-card p-1">
                                 {/* // Task 4: Display gift image or placeholder */}
                                 <div className="image-placeholder">
                                     {

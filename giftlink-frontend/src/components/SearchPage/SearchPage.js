@@ -30,8 +30,8 @@ function SearchPage() {
                 }
                 const data = await response.json();
                 setSearchResults(data);
-            } catch (err) {
-                setError(err.message);
+            } catch (error) {
+                setError(error.message);
             } finally {
                 setLoading(false);
             }
@@ -41,28 +41,29 @@ function SearchPage() {
     }, []);
 
     // Task 2. Fetch search results from the API based on user inputs.
-    const handleSearch = () => {
-        const filteredProducts = setSearchResults.filter((product) => {
-            const matchSearchQuery =
-                searchQuery === ''
-                    ||
-                product.name.toLowerCase().includes(searchQuery.toLowerCase())
-                    ||
-                product.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const handleSearch = async () => {
+        setLoading(true);
+        try {
+            let url = `${urlConfig.backendUrl}/api/search?`;
+            const queryParams = new URLSearchParams({
+                query: searchQuery,
+                age: ageRange,
+                condition: selectCondition,
+                category: selectCategory 
+            }).toString();
 
-            const matchCategory =
-                selectCategory === '' || selectCategory === product.category;
-
-            const matchCondition =
-                selectCondition === '' || selectCondition === product.condition;
-
-            const matchAgeRange =
-                product.age_years <= ageRange;
-
-            return matchSearchQuery && matchCategory && matchCondition && matchAgeRange;
-        });
-
-        setSearchResults(filteredProducts);
+            const response = await fetch(`${url}${queryParams}` );
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error; ${response.status}`)
+            }
+            const data = await response.json();
+            setSearchResults(data);
+        } catch(error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const navigate = useNavigate();
@@ -94,7 +95,10 @@ function SearchPage() {
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 <div className="col-md-4">
                     <div className="mb-3 p-3 border rounded bg-light">
-                        <h5>Filters</h5>
+                        <div className="mb-4">
+                            <h2 className="h3 fw-semibold text-dark">Filters</h2>
+                            <p className="text-secondary-emphasis small">Join our community in just a few steps.</p>
+                        </div>
                         <div className="d-flex flex-column">
                             {/* Task 3: Dynamically generate category and condition dropdown options.*/}
                             <div className="mb-3">
@@ -107,9 +111,9 @@ function SearchPage() {
                                     onChange={(e) => setSelectCategory(e.target.value)}
                                     required
                                 >
-                                    <option selected value="">All categories</option>
+                                    <option value="">All categories</option>
                                     {categories.map((category, index) => (
-                                        <option key={index} value={category}>{category}</option>
+                                        <option key={category} value={category}>{category}</option>
                                     ))}
                                 </select>
                             </div>
@@ -123,9 +127,9 @@ function SearchPage() {
                                     onChange={(e) => setSelectCondition(e.target.value)}
                                     required
                                 >
-                                    <option selected value="">All conditions</option>
+                                    <option value="">All conditions</option>
                                     {conditions.map((condition, index) => (
-                                        <option key={index} value={condition}>{condition}</option>
+                                        <option key={condition} value={condition}>{condition}</option>
                                     ))}
                                 </select>
                             </div>
@@ -170,7 +174,7 @@ function SearchPage() {
                         <div className="row row-cols-1 row-cols-md-1 row-cols-lg-1 g-1">
                             {searchResults.map((gift) => (
                                 <div key={gift.id} className="col">
-                                    <div className="card product-card">
+                                    <div className="card product-card p-1">
                                         {/* // Task 4: Display gift image or placeholder */}
                                         <div className="image-placeholder">
                                             {
