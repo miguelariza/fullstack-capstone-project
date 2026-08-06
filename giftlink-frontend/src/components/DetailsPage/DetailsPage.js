@@ -15,7 +15,7 @@ function DetailsPage() {
         if (!authenticationToken) {
 			// Task 1: Check for authentication and redirect
             console.error("No token available. No information available.");
-            navigate('/app/login');
+            navigate(`/app/product/${productId}`);
         }
 
         // get the gift to be rendered on the details page
@@ -94,14 +94,14 @@ function DetailsPage() {
     if (!gift) return <div>Gift not found</div>;
 
 return (
-        <div className="container mt-5">
+        <div className="container-fluid mt-5">
             <button className="btn btn-secondary mb-3" onClick={handleBackClick}>Back</button>
-            <div className="card product-details-card">
+            <div className="card product-card">
                 <div className="card-header text-white">
                     <h2 className="details-title">{gift.name}</h2>
                 </div>
                 <div className="card-body">
-                    <div className="image-placeholder-large">
+                    <div className="image-placeholder-large mb-2">
                         {/* Task 5: Display gift image */}
                         {
                             gift.image ? (
@@ -112,35 +112,38 @@ return (
                         }
                     </div>
                     {/* Task 6: Display gift details */}
-                    <p><strong>Category:</strong> 
+                    <p><strong>Category: </strong> 
                         {gift.category}
                     </p>
-                    <p><strong>Condition:</strong> 
+                    <p><strong>Condition: </strong> 
                         {gift.condition}
                     </p>
-                    <p><strong>Date Added:</strong> 
+                    <p><strong>Date Added: </strong> 
                         {gift.date_added}
                     </p>
-                    <p><strong>Age (Years):</strong> 
+                    <p><strong>Age (Years): </strong> 
                         {gift.age_years}
                     </p>
-                    <p><strong>Description:</strong> 
+                    <p><strong>Description: </strong> 
                         {gift.description}
                     </p>
                 </div>
             </div>
-            <div className="comments-section mt-4">
-                <h3 className="mb-3">Comments</h3>
-				{/* Task 7: Render comments section by using the map function to go through all the comments */}
-                {comments.map((comment, index) => (
-                    <div key={index} className="card mb-3">
-                        <div className="card-body">
-                            <p className="comment-author"><strong>{comment.author}:</strong></p>
-                            <p className="comment-text">{comment.comment}</p>
+            <div className="container">
+                <div className="comments-section mt-4">
+                    <h3 className="mb-3">Comments</h3>
+                    {/* Task 7: Render comments section by using the map function to go through all the comments */}
+                    {comments.map((comment, index) => (
+                        <div key={index} className="card product-card bg-dark mb-3">
+                            <div className="card-body">
+                                <p className="comment-author"><strong>{comment.author}:</strong></p>
+                                <p className="comment-text">{comment.comment}</p>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
+            
         </div>
     );
 }

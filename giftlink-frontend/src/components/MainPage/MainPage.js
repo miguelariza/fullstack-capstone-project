@@ -29,7 +29,8 @@ function MainPage() {
     // Task 2: Navigate to details page
     const goToDetailsPage = (productId) => {
         // Write your code below this line
-        navigate(`/app/product/${productId}`);
+        console.log("Navigating to product:", productId);
+        navigate('/app/login');
       };
 
     // Task 3: Format timestamp

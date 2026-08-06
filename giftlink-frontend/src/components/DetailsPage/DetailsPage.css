@@ -14,7 +14,6 @@ body {
 /* Style for image placeholder */
 .image-placeholder-large {
     background-color: var(--dust-grey);
-    border: 2px dashed var(--dry-sage);
     border-radius: 8px;
     min-height: 300px;
     display: flex;
@@ -68,7 +67,6 @@ body {
     color: var(--hunter-green);
     font-size: 1.8rem;
     font-weight: 600;
-    margin-bottom: 15px;
 }
 
 /* Style for comments section */
@@ -77,7 +75,7 @@ body {
     border-radius: 8px;
     padding: 20px;
     margin-top: 20px;
-    border-left: 4px solid var(--fern);
+    border-left: 2px solid var(--fern);
 }
 
 .comments-section h4 {
