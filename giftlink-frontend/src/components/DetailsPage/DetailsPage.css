@@ -11,46 +11,48 @@ body {
     color: var(--pine-teal);
 }
 
-/* Style for image placeholder */
-.image-placeholder-large {
-    background-color: var(--dust-grey);
-    border-radius: 8px;
-    min-height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--dry-sage);
-    font-size: 1.2rem;
+.image-placeholder {
+  width: 100%;
+  height: 300px; /* Fixed height, adjust as needed */
+  position: relative; /* Set a reference for absolute positioned children */
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
 }
 
-/* Style for product image */
-.product-image-large {
-    width: 100%;
-    height: auto;
-    max-height: 400px;
-    object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.image-placeholder-large img {
+  position: absolute; /* Position it over the placeholder */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the area without stretching */
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
 }
 
-/* Style for 'no image available' placeholder */
-.no-image-available-large {
-    background-color: var(--dust-grey);
-    border: 2px solid var(--dry-sage);
-    border-radius: 8px;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--dry-sage);
-    font-size: 1.2rem;
+.no-image-available {
+  width: 100%;
+  height: 200px; /* Adjust based on your design */
+  background-color: var(--dust-grey); /* Replaces #ddd */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: var(--dry-sage); /* Replaces #666 */
+  text-transform: uppercase;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
 }
 
 .no-image-available-large i {
     font-size: 3rem;
     margin-bottom: 10px;
     color: var(--fern);
+}
+
+.card-details {
+    width: 100%;
+    padding: 8px; 
 }
 
 /* Style for card header */
@@ -71,11 +73,8 @@ body {
 
 /* Style for comments section */
 .comments-section {
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
-    padding: 20px;
     margin-top: 20px;
-    border-left: 2px solid var(--fern);
+    width: 100%;
 }
 
 .comments-section h4 {

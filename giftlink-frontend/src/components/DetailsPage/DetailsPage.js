@@ -94,57 +94,59 @@ function DetailsPage() {
     if (!gift) return <div>Gift not found</div>;
 
 return (
-        <div className="container-fluid mt-5">
-            <button className="btn btn-secondary mb-3" onClick={handleBackClick}>Back</button>
-            <div className="card product-card">
-                <div className="card-header text-white">
-                    <h2 className="details-title">{gift.name}</h2>
-                </div>
-                <div className="card-body">
-                    <div className="image-placeholder-large mb-2">
-                        {/* Task 5: Display gift image */}
-                        {
-                            gift.image ? (
-                                <img className="product-image-large" src={gift.image} alt={gift.name} />
-                            ) : (
-                                <div className="no-image-available-large">No image available</div>
-                            )
-                        }
+    <div className="container mt-2">
+        <div className="row">
+            <div className="col-6">
+                <button className="btn btn-secondary mt-3" onClick={handleBackClick}>Back</button>
+                <div className="card-details product-card mx-auto bg-light">
+                    <div className='card-header'>
+                    <h2 className="details-title mb-2 mt-2">{gift.name}</h2>
                     </div>
-                    {/* Task 6: Display gift details */}
-                    <p><strong>Category: </strong> 
-                        {gift.category}
-                    </p>
-                    <p><strong>Condition: </strong> 
-                        {gift.condition}
-                    </p>
-                    <p><strong>Date Added: </strong> 
-                        {gift.date_added}
-                    </p>
-                    <p><strong>Age (Years): </strong> 
-                        {gift.age_years}
-                    </p>
-                    <p><strong>Description: </strong> 
-                        {gift.description}
-                    </p>
-                </div>
-            </div>
-            <div className="container">
-                <div className="comments-section mt-4">
-                    <h3 className="mb-3">Comments</h3>
-                    {/* Task 7: Render comments section by using the map function to go through all the comments */}
-                    {comments.map((comment, index) => (
-                        <div key={index} className="card product-card bg-dark mb-3">
-                            <div className="card-body">
-                                <p className="comment-author"><strong>{comment.author}:</strong></p>
-                                <p className="comment-text">{comment.comment}</p>
-                            </div>
+                    <div className="card-body">
+                        <div className="image-placeholder mb-2">
+                            {/* Task 5: Display gift image */}
+                                {
+                                    gift.image ? (
+                                        <img className="image-placeholder-large" src={gift.image} alt={gift.name} />
+                                    ) : (
+                                        <div className="no-image-available-large">No image available</div>
+                                    )
+                            }
                         </div>
-                    ))}
+                        {/* Task 6: Display gift details */}
+                        <p className='card-text mt-3 mb-2'><strong>Category: </strong>
+                            {gift.category}</p>
+                        <p className='card-text mb-2'><strong>Condition: </strong> 
+                            {gift.condition}
+                        </p>
+                        <p className='card-text mb-2'><strong>Date Added: </strong> 
+                            {gift.date_added}
+                        </p>
+                        <p className='card-text mb-2'><strong>Age (Years): </strong> 
+                            {gift.age_years}
+                        </p>
+                        <p className='card-text mb-3'><strong>Description: </strong> 
+                            {gift.description}
+                        </p>
+                    </div>
                 </div>
+
+                <div className="comments-section mt-3">
+                        <h3 className="mb-3">Comments</h3>
+                        {/* Task 7: Render comments section by using the map function to go through all the comments */}
+                        {comments.map((comment, index) => (
+                            <div key={index} className="card-details product-card bg-light">
+                                <div className="card-body">
+                                    <p className="comment-author"><strong>{comment.author}:</strong></p>
+                                    <p className="comment-text">{comment.comment}</p>
+                                </div>
+                            </div>
+                        ))}
+                </div>
+
             </div>
-            
         </div>
+    </div>
     );
 }
 
