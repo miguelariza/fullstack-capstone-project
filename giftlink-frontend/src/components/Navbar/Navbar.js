@@ -39,7 +39,7 @@ export default function Navbar() {
         <nav className="navbar navbar-expand-lg navbar-dark">
             <div className="container-fluid">
                 {/* Brand */}
-                <a className="navbar-brand" href="#">
+                <a className="navbar-brand" href={`${urlConfig.backendUrl}/app`}>
                     <i className="bi bi-gift"></i> GiftLink
                 </a>
 
@@ -60,23 +60,25 @@ export default function Navbar() {
                         <li className="nav-item">
                             <a className="nav-link" href="/app/search">Search</a>
                         </li>
-                        
-                    {isLoggedIn ? (
-                            <>
-                            <li className="nav-item"> <span className="nav-link" style={{color: "black", cursor:"pointer"}} onClick={profileSecton}>Welcome, {userName}</span> </li>
-                            <li className="nav-item"><button className="nav-link login-btn" onClick={handleLogout}>Logout</button></li>
-                            </ul>
-                            </>
-                        ) : (
-                            <>
+                        {isLoggedIn ? (
+                                <>
                                 <li className="nav-item">
-                                <a className="nav-link" href="/app/register">Register</a>
+                                    <span className="nav-link" style={{color: "black", cursor:"pointer"}} onClick={profileSecton}>Welcome, {userName}</span>
                                 </li>
-                                </ul>
-                                {/* Login */}
-                                <a href="/app/login" className="btn btn-search">Login</a>
-                            </>                        
-                        )}
+                                <li className="nav-item">
+                                    <button className="nav-link login-btn" onClick={handleLogout}>Logout</button>
+                                </li>
+                                </>
+                            ) : (
+                                <>
+                                    <li className="nav-item">
+                                    <a className="nav-link" href="/app/register">Register</a>
+                                    </li>
+                                    {/* Login */}
+                                    <a href="/app/login" className="btn btn-search">Login</a>
+                                </>                        
+                            )}
+                    </ul>
                 </div>
             </div>
         </nav>
