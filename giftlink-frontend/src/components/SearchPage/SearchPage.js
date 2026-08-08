@@ -20,6 +20,7 @@ function SearchPage() {
     useEffect(() => {
         // fetch all products
         const fetchProducts = async () => {
+
             try {
                 let url = `${urlConfig.backendUrl}/api/gifts`
                 console.log(url)

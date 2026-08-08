@@ -1,15 +1,64 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
+import { urlConfig } from '../../config';
+import { useAppContext } from '../../context/AuthContext';
 
 function RegisterPage() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [ loading, setIsLoading ] = useState(true);
+    const [ error, setError ] = useState(null);
+    
+    const navigate = useNavigate();
+    const { setIsLoggedIn } = useAppContext();
 
     const handleRegister = async () => {
-        console.log("Register invoked.");
+        e.preventDefault();
+
+        setError('');
+        setIsLoading(true);
+
+        const registerForm = {
+            firstName: setFirstName,
+            lastName: setLastName,
+            email: setEmail,
+            password: setPassword
+        };
+
+        try {
+            //Step 1: Implement API call
+            let url = `${urlConfig.backendUrl}/api/auth/register`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(registerForm)
+            });
+
+            const data = await JSON.response();
+            if(!response) {
+                throw new Error(data.error || 'Failed to register. Check your approach.')
+            }
+
+            console.log('Point on the board! User registered:', data.user);
+            //Step 2: Access data, login, set the AuthContext and set user details
+            if(data.token) {
+                sessionStorage.setItem('token', data.token);
+                sessionStorage.setItem('name', firstName);
+                sessionStorage.setItem('email', data.email);
+                setIsLoggedIn(true);
+                navigate('/app');
+            }
+
+        } catch(error) {
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
