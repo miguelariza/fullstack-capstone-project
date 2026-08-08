@@ -4,21 +4,16 @@ const router = express.Router();
 const connectToDatabase = require('../models/db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const baseLogger = require('../logger');
+const logger = require('../logger');
+const dotenv = require('dotenv');
 
-//Step 1 - Task 3: Create a Pino logger instance
-const logger = baseLogger.child({
-    endpoint: '/register',
-    email: email
-});
-
-require('dotenv').config();
+dotenv.config();
 
 //Step 1 - Task 4: Create JWT secret
 const JWT_SECRET = process.env.JWT_SECRET;
 
-if ('!JWT_SECRET') {
-    baseLogger.error('CRITICAL: JWT_SECRET is not defined.');
+if (!JWT_SECRET) {
+    logger.error('CRITICAL: JWT_SECRET is not defined.');
     throw new Error('JWT_SECRET is missing');
 }
 
@@ -26,13 +21,22 @@ router.post('/register', async (req, res) => {
 //Step 2
     try {
         const { firstName, lastName, email, password } = req.body;
+        
+        //Step 1 - Task 3: Create a Pino logger instance
+        logger.child({
+            endpoint: '/register',
+            email: email
+        });
+        
         logger.info('Registration attemp initiated');
 
         // 1. Check data passed through inputs
-        if (!email || !password) {
+        if (!email || !password || !email || !password) {
             logger.warn({email}, 'Registration failed: Missing credentials.');
             return res.status(400).json({error: 'Email and password are required.'});
         }
+
+        const normalizedEmail = email.toLowerCase().trim();
 
         // 2. Connect to database
         const db = await connectToDatabase();
@@ -40,9 +44,9 @@ router.post('/register', async (req, res) => {
         const collection = db.collection('users');
 
         // 3. Does the user already exist?
-        const existingUser = await collection.findOne({ email: email }); 
+        const existingUser = await collection.findOne({ email: normalizedEmail }); 
         if (existingUser) {
-            logger.info({ email }, 'Registration blocked: User already exists.');
+            logger.info({ normalizedEmail }, 'Registration blocked: User already exists.');
             return res.status(409).json({ error: 'Email is already registered.' });
         }
 
@@ -51,24 +55,34 @@ router.post('/register', async (req, res) => {
 
         // 5. Create the new user
         const newUser = await collection.insertOne({
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
+            firstName,
+            lastName,
+            email: normalizedEmail,
             password: hashedPassword,
-            createdAt: newDate(),
+            createdAt: new Date(),
         });
-
-        await newUser.save();
 
         // 6. Generate JWT
         const token = jwt.sign(
             { id: newUser.insertedId},
-            JWT_SECRET || 'fallback_secret_for_dev',
+            JWT_SECRET,
             { expiresIn: '2h' }
         );
 
-    } catch(error) {
+        // 7. Return results
+        res.status(201).json({
+            message: "User registered successfully.",
+            token,
+            user: {
+                firstName,
+                lastName,
+                email: normalizedEmail,
+            }
+        });
 
+    } catch(error) {
+        logger.error({ err:error }, 'Unhandled error during registration play.');
+        res.status(500).json({ error: 'Internal server error on the court.'});
     }
 
 });
