@@ -13,34 +13,43 @@ function LoginPage() {
     const navigate = useNavigate();
     const { setIsLoggedIn } = useAppContext();
     const bearerToken =  () => {
-        const existingToken = sessionStorage.getItem('bearer-token');
+        const existingToken = sessionStorage.getItem('token');
         return !!(existingToken && existingToken.trim().length > 0);
     };
 
-    const handleLogin = async () => {
-        try {
-            e.preventDefault();
-            setError('');
-            setSuccess(false);
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError('');
+        setSuccess(false);
 
-            if(bearerToken) {
-                setError('Action blocked: You are already logged in with a valid token.');
-                navigate('/app');
-            }
+        if(bearerToken()) {
+            setError('Action blocked: You are already logged in with a valid token.');
+            navigate('/app');
+            return;
+        }
+
+        try {
 
             const loginForm = {
-                email: setEmail,
-                password: setPassword
+                email: email,
+                password: password
             };
 
             let url = `${urlConfig.backendUrl}/api/auth/login`;
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(loginForm)
             });
+
+            if(!response.ok) {
+                const data = await response.json().catch(() => ({}));
+                throw new Error(data.error || 'Login failed. Check your approach.')
+            }
+
+            const data = await response.json();
 
             const authHeader = response.headers.get('Authorization');
             if(!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -52,7 +61,13 @@ function LoginPage() {
                 throw new Error('Authentication failed: Token value is empty.');
             }
 
-            sessionStorage.setItem('authToken', token);
+            if(token) {
+                sessionStorage.setItem('token', token);
+                sessionStorage.setItem('name', data.firstName);
+                sessionStorage.setItem('email', data.email);
+                setIsLoggedIn(true);
+                navigate('/app');
+            }
             setSuccess(true);
 
         } catch(error) {
@@ -94,7 +109,7 @@ function LoginPage() {
                                     <label htmlFor='password'>Password</label>
                                     <input
                                         className='form-control form-control-lg'
-                                        type='text'
+                                        type='password'
                                         placeholder="Enter your password"
                                         id='password'
                                         name='password'

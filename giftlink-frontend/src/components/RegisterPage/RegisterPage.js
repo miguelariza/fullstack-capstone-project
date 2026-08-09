@@ -15,7 +15,7 @@ function RegisterPage() {
     const navigate = useNavigate();
     const { setIsLoggedIn } = useAppContext();
 
-    const handleRegister = async () => {
+    const handleRegister = async (e) => {
         e.preventDefault();
 
         setError('');
@@ -40,7 +40,7 @@ function RegisterPage() {
             });
 
             const data = await JSON.response();
-            if(!response) {
+            if(!response.ok) {
                 throw new Error(data.error || 'Failed to register. Check your approach.')
             }
 
