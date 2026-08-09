@@ -9,6 +9,7 @@ function LoginPage() {
     const [password, setPassword] = useState('');
     const [ success, setSuccess ] = useState(true);
     const [ error, setError ] = useState(null);
+    const [incorrect, setIncorrect] = useState('');
     
     const navigate = useNavigate();
     const { setIsLoggedIn } = useAppContext();
@@ -61,17 +62,24 @@ function LoginPage() {
                 throw new Error('Authentication failed: Token value is empty.');
             }
 
-            if(token) {
-                sessionStorage.setItem('token', token);
+            const hashedPass = data.password;
+            const isMatch = await bcrypt.compare(password, hashedPass);
+            if(!isMatch) {
+                setIncorrect("");
+                throw new Error('Authentication failed: Invalid password credentials.');
+            }
+
+            sessionStorage.setItem('token', token);
+            if(data.email) {
                 sessionStorage.setItem('name', data.firstName);
                 sessionStorage.setItem('email', data.email);
+                setSuccess(true);
                 setIsLoggedIn(true);
                 navigate('/app');
             }
-            setSuccess(true);
 
         } catch(error) {
-            setError(error || 'An unexpected error occurred.');
+            setError(error.message || 'An unexpected error occurred.');
         }
     };
 
@@ -117,14 +125,15 @@ function LoginPage() {
                                         onChange={(e) => setPassword(e.target.value)}
                                         required
                                     />
+                                    <span style={{color:'red',height:'.5cm',display:'block',fontStyle:'italic',fontSize:'12px'}}>{incorrect}</span>
                                 </div>
 
                                 {/* Submit button */}
-                                <a href="#" type="submit" onClick={handleLogin} className='btn btn-primary'>Register</a>
+                                <a href="#" type="submit" onClick={handleLogin} className='btn btn-primary'>Sign in</a>
                             
                                 {/* footnote with link */}
                                 <div className="form-footnote text-center small text-secondary mt-2">
-                                    New here? <a href='/app/register'>Register here</a>
+                                    New here? <a href='/app/register'>Register</a>
                                 </div>
                             </form>
                         </div>
