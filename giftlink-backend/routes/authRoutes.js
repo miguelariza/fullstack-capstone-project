@@ -30,6 +30,12 @@ router.post('/register', async (req, res) => {
         
         logger.info('Registration attemp initiated');
 
+        // 1. Check data passed through inputs
+        if (!email || !firstName || !lastName) {
+            logger.warn({email}, 'Login failed: Missing credentials.');
+            return res.status(400).json({error: 'Email is required.'});
+        }
+
         const normalizedEmail = email.toLowerCase().trim();
 
         // 2. Connect to database
@@ -94,12 +100,9 @@ router.post('/login', async( req, res ) => {
         logger.info('Login attemp initiated');
 
         // 1. Check data passed through inputs
-        if (!email) {
+        if (!email || !password) {
             logger.warn({email}, 'Login failed: Missing credentials.');
-            return res.status(400).json({error: 'Email is required.'});
-        } else if (!password) {
-            logger.warn({password}, 'Login failed: Missing credentials.');
-            return res.status(400).json({error: 'Password is required.'});
+            return res.status(400).json({error: 'Email and password is required.'});
         }
 
         const normalizedEmail = email.toLowerCase().trim();
@@ -111,19 +114,41 @@ router.post('/login', async( req, res ) => {
 
         // 3. Does the user already exist?
         const existingUser = await collection.findOne({ email: normalizedEmail }); 
-        
         if (!existingUser) {
             logger.info({ normalizedEmail }, 'Login blocked: Wrong credentials.');
-            return re   s.status(409).json({ error: 'Invalid email or password.' });
+            return res.status(409).json({ error: 'Invalid email or password.' });
         } else {
-            const passMatch = await bcrypt.compare(password, existingUser.password);
+            const validPass = await bcrypt.compare(password, existingUser.password);
         }
 
+        if(!validPass) {
+            logger.info({ normalizedEmail }, 'Login blocked: Wrong credentials.');
+            return res.status(409).json({ error: 'Invalid email or password.' });
+        }
 
-        
+        const payload = {
+            firstName: existingUser.firstName,
+            email: existingUser.email
+        };
+
+        const token = jwt.sign(
+            payload,
+            JWT_SECRET,
+            { expiresIn: '2h' }
+        );
+
+        const userData = existingUser.toObject();
+        delete userData.password;
+
+        return res.status(200).json({
+            message: 'Authentication successful.',
+            token, // Client will store this token for subsequent requests
+            user: userData
+        });
 
     } catch (error) {
-
+        logger.error({ err:error }, 'Unhandled error during authentication.');
+        res.status(500).json({ error: 'Internal server error on the court.'});
     }
 });
 
