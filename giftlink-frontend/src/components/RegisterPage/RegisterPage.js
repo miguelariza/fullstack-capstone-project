@@ -22,10 +22,10 @@ function RegisterPage() {
         setIsLoading(true);
 
         const registerForm = {
-            firstName: setFirstName,
-            lastName: setLastName,
-            email: setEmail,
-            password: setPassword
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
         };
 
         try {
@@ -39,7 +39,7 @@ function RegisterPage() {
                 body: JSON.stringify(registerForm)
             });
 
-            const data = await JSON.response();
+            const data = await response.json();
             if(!response.ok) {
                 throw new Error(data.error || 'Failed to register. Check your approach.')
             }
@@ -135,7 +135,7 @@ function RegisterPage() {
                                 </div>
 
                                 {/* Submit button */}
-                                <a href="#" type="submit" onClick={handleRegister} className='btn btn-primary'>Register</a>
+                                <button type="button" className="btn btn-primary w-100 mb-3" onClick={handleRegister}>Register</button>
                             
                                 {/* footnote with link */}
                                 <div className="form-footnote text-center small text-secondary mt-2">

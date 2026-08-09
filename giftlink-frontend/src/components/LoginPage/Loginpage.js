@@ -62,9 +62,7 @@ function LoginPage() {
                 throw new Error('Authentication failed: Token value is empty.');
             }
 
-            const hashedPass = data.password;
-            const isMatch = await bcrypt.compare(password, hashedPass);
-            if(!isMatch) {
+            if(password !== data.password) {
                 setIncorrect("");
                 throw new Error('Authentication failed: Invalid password credentials.');
             }
