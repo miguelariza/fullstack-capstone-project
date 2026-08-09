@@ -1,13 +1,63 @@
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
+import { urlConfig } from '../../config';
+import { useAppContext } from '../../context/AuthContext';
 
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [ success, setSuccess ] = useState(true);
+    const [ error, setError ] = useState(null);
+    
+    const navigate = useNavigate();
+    const { setIsLoggedIn } = useAppContext();
+    const bearerToken =  () => {
+        const existingToken = sessionStorage.getItem('bearer-token');
+        return !!(existingToken && existingToken.trim().length > 0);
+    };
 
     const handleLogin = async () => {
-        console.log("Login invoked.");
+        try {
+            e.preventDefault();
+            setError('');
+            setSuccess(false);
+
+            if(bearerToken) {
+                setError('Action blocked: You are already logged in with a valid token.');
+                navigate('/app');
+            }
+
+            const loginForm = {
+                email: setEmail,
+                password: setPassword
+            };
+
+            let url = `${urlConfig.backendUrl}/api/auth/login`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(loginForm)
+            });
+
+            const authHeader = response.headers.get('Authorization');
+            if(!authHeader || !authHeader.startsWith('Bearer ')) {
+                throw new Error('Authentication failed: Missing or invalid Bearer prefix.');
+            }
+
+            const token = authHeader.substring(7).trim();
+            if(!token) {
+                throw new Error('Authentication failed: Token value is empty.');
+            }
+
+            sessionStorage.setItem('authToken', token);
+            setSuccess(true);
+
+        } catch(error) {
+            setError(error || 'An unexpected error occurred.');
+        }
     };
 
     return (
