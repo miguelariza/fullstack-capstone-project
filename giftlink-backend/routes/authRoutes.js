@@ -30,12 +30,6 @@ router.post('/register', async (req, res) => {
         
         logger.info('Registration attemp initiated');
 
-        // 1. Check data passed through inputs
-        if (!email || !password || !email || !password) {
-            logger.warn({email}, 'Registration failed: Missing credentials.');
-            return res.status(400).json({error: 'Email and password are required.'});
-        }
-
         const normalizedEmail = email.toLowerCase().trim();
 
         // 2. Connect to database
@@ -85,6 +79,52 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ error: 'Internal server error on the court.'});
     }
 
+});
+
+router.post('/login', async( req, res ) => {
+    try {
+        const { email, password } = req.body;
+        
+        //Step 1 - Task 3: Create a Pino logger instance
+        logger.child({
+            endpoint: '/login',
+            email: email
+        });
+        
+        logger.info('Login attemp initiated');
+
+        // 1. Check data passed through inputs
+        if (!email) {
+            logger.warn({email}, 'Login failed: Missing credentials.');
+            return res.status(400).json({error: 'Email is required.'});
+        } else if (!password) {
+            logger.warn({password}, 'Login failed: Missing credentials.');
+            return res.status(400).json({error: 'Password is required.'});
+        }
+
+        const normalizedEmail = email.toLowerCase().trim();
+
+        // 2. Connect to database
+        const db = await connectToDatabase();
+        // Call gifts collection
+        const collection = db.collection('users');
+
+        // 3. Does the user already exist?
+        const existingUser = await collection.findOne({ email: normalizedEmail }); 
+        
+        if (!existingUser) {
+            logger.info({ normalizedEmail }, 'Login blocked: Wrong credentials.');
+            return re   s.status(409).json({ error: 'Invalid email or password.' });
+        } else {
+            const passMatch = await bcrypt.compare(password, existingUser.password);
+        }
+
+
+        
+
+    } catch (error) {
+
+    }
 });
 
 module.exports = router;
