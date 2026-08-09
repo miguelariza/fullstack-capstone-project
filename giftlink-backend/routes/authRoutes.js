@@ -117,11 +117,10 @@ router.post('/login', async( req, res ) => {
         if (!existingUser) {
             logger.info({ normalizedEmail }, 'Login blocked: Wrong credentials.');
             return res.status(409).json({ error: 'Invalid email or password.' });
-        } else {
-            const validPass = await bcrypt.compare(password, existingUser.password);
         }
 
-        if(!validPass) {
+        const isMatch = await bcrypt.compare(password, existingUser.password);
+        if(!isMatch) {
             logger.info({ normalizedEmail }, 'Login blocked: Wrong credentials.');
             return res.status(409).json({ error: 'Invalid email or password.' });
         }
@@ -137,13 +136,12 @@ router.post('/login', async( req, res ) => {
             { expiresIn: '2h' }
         );
 
-        const userData = existingUser.toObject();
-        delete userData.password;
+        delete existingUser.password;
 
         return res.status(200).json({
             message: 'Authentication successful.',
             token, // Client will store this token for subsequent requests
-            user: userData
+            user: existingUser
         });
 
     } catch (error) {
