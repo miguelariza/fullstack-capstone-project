@@ -6,20 +6,20 @@ import { useAppContext } from '../../context/AuthContext';
 export default function Navbar() {
 
     const { isLoggedIn, setIsLoggedIn, userName , setUserName } = useAppContext();
-
     const navigate = useNavigate();
+
     useEffect(() => {
         const authTokenFromSession = sessionStorage.getItem('token');
         const nameFromSession = sessionStorage.getItem('name');
-        if(authTokenFromSession) {
-            if(isLoggedIn && nameFromSession) {
-                setUserName(nameFromSession);
-            } else {
-                sessionStorage.removeItem('token');
-                sessionStorage.removeItem('name');
-                sessionStorage.removeItem('email');
-                setIsLoggedIn(false);
-            }
+
+        if(authTokenFromSession && nameFromSession) {
+            setIsLoggedIn(true);
+            setUserName(nameFromSession);
+        } else if (!authTokenFromSession && isLoggedIn) {
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('name');
+            sessionStorage.removeItem('email');
+            setIsLoggedIn(false);
         }
     }, [isLoggedIn, setIsLoggedIn, setUserName]);
 
