@@ -1,5 +1,6 @@
 //Step 1 - Task 2: Import necessary packages
 const express = require('express');
+import { body, validationResult } from 'express-validator';
 const router = express.Router();
 const connectToDatabase = require('../models/db');
 const bcrypt = require('bcryptjs');
@@ -148,6 +149,88 @@ router.post('/login', async( req, res ) => {
         logger.error({ err:error }, 'Unhandled error during authentication.');
         res.status(500).json({ error: 'Internal server error on the court.'});
     }
+});
+
+router.put('/update',
+    [
+        body("name")
+            .trim()
+            .notEmpty().withMessage('First name is required.')
+            .isLength({min: 3, max: 20}).withMessage('First name must be 3-15 characters')
+            .matches(/^[a-zA-Z]+$/).withMessage('Username can only contain letters'),
+        
+        body("email")
+            .trim()
+            .notEmpty().withMessage('Email is required.')
+            .isEmail().withMessage('Please provide a valid email address.')
+            .normalizeEmail(),
+    ],
+    
+    async (req, res) => {
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                errors: errors.mapped()
+            });
+        }
+
+        const email = req.headers.email;
+        if (!email) {
+            logger.error('Email not found in the request headers');
+            return res.status(400).json({ error: "Email not found in the request headers" });
+        }
+
+        const updatedName = req.body.name;
+
+        try {
+        // Connect to database
+        const db = await connectToDatabase();
+        // Call users collection
+        const collection = db.collection('users');
+
+        // 3. Does the user already exist?
+        const existingUser = await collection.findOne({ email }); 
+        if (!existingUser) {
+            logger.info({ email }, "Update blocked: User doesn't exists.");
+            return res.status(409).json({ error: 'Check credentials.' });
+        }
+
+        // Find and Update
+        const updatedUser = await collection.findOneAndUpdate(
+            { email: email },
+            { $set: { firstName: updatedName }},
+            { returnDocument: 'after' }
+        );
+        
+        const payload = {
+            firstName: updatedUser.firstName,
+            lastName: updatedUser.lastName,
+            email: updatedUser.email,
+        };
+
+        const token = jwt.sign(
+            payload,
+            JWT_SECRET,
+            { expiresIn: '2h' }
+        );
+
+        // 7. Return results
+        res.status(200).json({
+            success: true,
+            message: "Profile updated successfully.",
+            token,
+            user: {
+                firstName: updatedUser.firstName,
+                lastName: updatedUser.lastName,
+                email
+            }
+        });
+        
+        } catch (error) {
+            return res.status(500).json({ success: false, message: 'Server error' });
+        }
 });
 
 module.exports = router;
