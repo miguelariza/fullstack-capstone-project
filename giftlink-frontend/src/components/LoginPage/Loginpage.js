@@ -7,7 +7,7 @@ import { useAppContext } from '../../context/AuthContext';
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [ success, setSuccess ] = useState(true);
+    const [ success, setSuccess ] = useState(false);
     const [ error, setError ] = useState(null);
     const [incorrect, setIncorrect] = useState('');
     
@@ -21,7 +21,6 @@ function LoginPage() {
     const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
-        setSuccess(false);
 
         if(bearerToken()) {
             setError('Action blocked: You are already logged in with a valid token.');
@@ -30,7 +29,6 @@ function LoginPage() {
         }
 
         try {
-
             const loginForm = {
                 email: email,
                 password: password
@@ -45,26 +43,15 @@ function LoginPage() {
                 body: JSON.stringify(loginForm)
             });
 
+            const data = await response.json();
             if(!response.ok) {
                 const data = await response.json().catch(() => ({}));
                 throw new Error(data.error || 'Login failed. Check your approach.')
             }
 
-            const data = await response.json();
-
-            const authHeader = response.headers.get('Authorization');
-            if(!authHeader || !authHeader.startsWith('Bearer ')) {
-                throw new Error('Authentication failed: Missing or invalid Bearer prefix.');
-            }
-
-            const token = authHeader.substring(7).trim();
+            const token = data.token;
             if(!token) {
                 throw new Error('Authentication failed: Token value is empty.');
-            }
-
-            if(password !== data.password) {
-                setIncorrect("");
-                throw new Error('Authentication failed: Invalid password credentials.');
             }
 
             sessionStorage.setItem('token', token);
@@ -100,7 +87,7 @@ function LoginPage() {
                                     <label htmlFor='email'>Email</label>
                                     <input
                                         className='form-control form-control-lg'
-                                        type='text'
+                                        type='email'
                                         placeholder="Enter your email"
                                         id='email'
                                         name='email'
@@ -126,9 +113,8 @@ function LoginPage() {
                                     <span style={{color:'red',height:'.5cm',display:'block',fontStyle:'italic',fontSize:'12px'}}>{incorrect}</span>
                                 </div>
 
-                                {/* Submit button */}
-                                <a href="#" type="submit" onClick={handleLogin} className='btn btn-primary'>Sign in</a>
-                            
+                                {/* Sign in button */}
+                                <button type="button" className="btn btn-primary w-100 mb-3" onClick={handleLogin}>Sign in</button>
                                 {/* footnote with link */}
                                 <div className="form-footnote text-center small text-secondary mt-2">
                                     New here? <a href='/app/register'>Register</a>
