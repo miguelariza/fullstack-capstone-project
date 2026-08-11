@@ -59,21 +59,22 @@ function LoginPage() {
             });
             // Task 9. Access data in json format
             const data = await response.json();
-            //console.log(data);
+            console.log(data);
             if(!response.ok) {
                 const data = await response.json().catch(() => ({}));
                 throw new Error(data.error || 'Login failed. Check your approach.')
             }
-            
+            console.log(data.user.firstName);
             const token = data.token;
             if(!token) {
                 throw new Error('Authentication failed: Token value is empty.');
             }
             // Task 10. Set user details in session storage
+            const user = data.user;
             if (token) {
                 sessionStorage.setItem('token', token);
-                sessionStorage.setItem('name', data.firstName);
-                sessionStorage.setItem('email', data.email);
+                sessionStorage.setItem('name', user.firstName);
+                sessionStorage.setItem('email', user.email);
                 setIsLoggedIn(true);
                 navigate('/app');
             } else {

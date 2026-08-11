@@ -25,11 +25,11 @@ const Profile = () => {
         try {
         const authtoken = sessionStorage.getItem("token");
         const email = sessionStorage.getItem("email");
-        const name=sessionStorage.getItem('name');
+        const name= sessionStorage.getItem('name');
         if (name || authtoken) {
                     const storedUserDetails = {
                     name: name,
-                    email:email
+                    email: email
                     };
 
                     setUserDetails(storedUserDetails);
@@ -57,7 +57,7 @@ const handleSubmit = async (e) => {
   try {
     const authtoken = sessionStorage.getItem("token");
     const email = sessionStorage.getItem("email");
-
+    //console.log(email);
     if (!authtoken || !email) {
       navigate("/app/login");
       return;
@@ -65,7 +65,7 @@ const handleSubmit = async (e) => {
 
     const payload = { ...updatedDetails };
     const response = await fetch(`${urlConfig.backendUrl}/api/auth/update`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${authtoken}`
@@ -73,6 +73,7 @@ const handleSubmit = async (e) => {
         body: JSON.stringify(payload)
     });
 
+    //const data = await response.json();
     if (response.ok) {
         // Update the user details in session storage
         //Step 1: Task 4
