@@ -136,7 +136,7 @@ function SearchPage() {
                             </div>
                             {/* Task 4: Implement an age range slider and display the selected value. */}
                             <div className="mb-3">
-                                <label for="range1" className="form-label">Chronological Age</label>
+                                <label htmlFor="range1" className="form-label">Chronological Age</label>
                                 <input
                                     type="range"
                                     className="form-range"
@@ -145,7 +145,7 @@ function SearchPage() {
                                     value={ageRange}
                                     onChange={(e) => setAgeRange(e.target.value)}
                                     id="range4" />
-                                Less than <output for="range1" id="rangeValue" aria-hidden="true">{ageRange}</output> years.
+                                Less than <output htmlFor="range1" id="rangeValue" aria-hidden="true">{ageRange}</output> years.
                             </div>
                         </div>
                     </div>

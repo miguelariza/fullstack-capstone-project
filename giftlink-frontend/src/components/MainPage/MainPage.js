@@ -30,7 +30,7 @@ function MainPage() {
     const goToDetailsPage = (productId) => {
         // Write your code below this line
         console.log("Navigating to product:", productId);
-        navigate('/app/login');
+        navigate(`product/${productId}`);
       };
 
     // Task 3: Format timestamp

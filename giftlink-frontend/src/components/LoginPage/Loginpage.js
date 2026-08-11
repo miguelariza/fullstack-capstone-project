@@ -16,12 +16,13 @@ function LoginPage() {
     const { setIsLoggedIn } = useAppContext();
 
     const existingToken = sessionStorage.getItem('token');
-
+    console.log(existingToken.name);
     const handleLogin = async (e) => {
         e.preventDefault();
 
         if(!email || !password) {
             setError('Please fill in all fields');
+            console.log('Review all fields.');
             return;
         }
 
@@ -63,13 +64,14 @@ function LoginPage() {
         if(!token) {
             throw new Error('Authentication failed: Token value is empty.');
         }
-
+        console.log(data.email);
         sessionStorage.setItem('token', token);
         if(data.email) {
             sessionStorage.setItem('name', data.firstName);
             sessionStorage.setItem('email', data.email);
             setSuccess(true);
             setIsLoggedIn(true);
+            console.log('The user is logged in at the end.');
             navigate('/app');
         }
 
