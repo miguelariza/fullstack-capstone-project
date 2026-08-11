@@ -50,6 +50,7 @@ function RegisterPage() {
                 sessionStorage.setItem('token', data.token);
                 sessionStorage.setItem('name', firstName);
                 sessionStorage.setItem('email', data.email);
+                console.log(sessionStorage.getItem('name'));
                 setIsLoggedIn(true);
                 navigate('/app');
             }

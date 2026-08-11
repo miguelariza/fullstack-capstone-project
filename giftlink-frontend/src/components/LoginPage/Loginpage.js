@@ -1,79 +1,89 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import './LoginPage.css';
+// Task 1. Import url config
 import { urlConfig } from '../../config';
+// Task 2. Import useAppContext
 import { useAppContext } from '../../context/AuthContext';
+// Task 3. Import useNavigate from react-router-dom
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [ success, setSuccess ] = useState(false);
     const [ error, setError ] = useState(null);
+
+    // Task 4. State for incorrect password
     const [incorrect, setIncorrect] = useState('');
-    const [isLoading, setIsLoading] = useState('');
     
+    // Task 5. Create local vars for:
     const navigate = useNavigate();
     const { setIsLoggedIn } = useAppContext();
+    const bearerToken = sessionStorage.getItem('token');
 
-    const existingToken = sessionStorage.getItem('token');
-    console.log(existingToken.name);
+    // Task 6. Verify if bearer token has a value
+    useEffect(() => {
+        if(bearerToken && bearerToken.trim().length > 0) {
+            navigate('/app');
+        }
+    }, [navigate]);
+
     const handleLogin = async (e) => {
         e.preventDefault();
 
         if(!email || !password) {
-            setError('Please fill in all fields');
-            console.log('Review all fields.');
-            return;
+            setIncorrect("Missing information. Please fill in all fields");
+            setTimeout(() => {
+                setIncorrect("");
+              }, 2000);
         }
 
         setError('');
-        setIsLoading(true);
-
-        if (existingToken && existingToken.trim().length > 0) {
-            setError('You are already logged in.');
-            setIsLoading(false);
-            navigate('/app');
-            return;
-        }
 
         try {
+
             const loginForm = {
                 email: email,
                 password: password
             };
 
-        let url = `${urlConfig.backendUrl}/api/auth/login`;
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(loginForm)
-        });
-
-        const data = await response.json();
-        if(!response.ok) {
-            const data = await response.json().catch(() => ({}));
-            throw new Error(data.error || 'Login failed. Check your approach.')
-        }
-
-        console.log(data.firstName);
-        console.log(data.email);
-
-        const token = data.token;
-        if(!token) {
-            throw new Error('Authentication failed: Token value is empty.');
-        }
-        console.log(data.email);
-        sessionStorage.setItem('token', token);
-        if(data.email) {
-            sessionStorage.setItem('name', data.firstName);
-            sessionStorage.setItem('email', data.email);
-            setSuccess(true);
-            setIsLoggedIn(true);
-            console.log('The user is logged in at the end.');
-            navigate('/app');
-        }
+            let url = `${urlConfig.backendUrl}/api/auth/login`;
+            // Task 7,8,9. Set post, headers, and body
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': bearerToken ? `Bearer ${bearerToken}` : '', // Include Bearer token if available
+                },
+                body: JSON.stringify(loginForm)
+            });
+            // Task 9. Access data in json format
+            const data = await response.json();
+            //console.log(data);
+            if(!response.ok) {
+                const data = await response.json().catch(() => ({}));
+                throw new Error(data.error || 'Login failed. Check your approach.')
+            }
+            
+            const token = data.token;
+            if(!token) {
+                throw new Error('Authentication failed: Token value is empty.');
+            }
+            // Task 10. Set user details in session storage
+            if (token) {
+                sessionStorage.setItem('token', token);
+                sessionStorage.setItem('name', data.firstName);
+                sessionStorage.setItem('email', data.email);
+                setIsLoggedIn(true);
+                navigate('/app');
+            } else {
+                document.getElementById('email').value = "";
+                document.getElementById('password').value = "";
+                setIncorrect("Wrong password. Try again.");
+                setTimeout(() => {
+                    setIncorrect("");
+                  }, 2000);
+            }
 
         } catch(error) {
             console.log('We have a problem.');

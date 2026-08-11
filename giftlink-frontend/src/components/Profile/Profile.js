@@ -13,7 +13,7 @@ const Profile = () => {
     const [editMode, setEditMode] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
-        const authtoken = sessionStorage.getItem("auth-token");
+        const authtoken = sessionStorage.getItem("token");
         if (!authtoken) {
         navigate("/app/login");
         } else {
@@ -23,7 +23,7 @@ const Profile = () => {
 
     const fetchUserProfile = async () => {
         try {
-        const authtoken = sessionStorage.getItem("auth-token");
+        const authtoken = sessionStorage.getItem("token");
         const email = sessionStorage.getItem("email");
         const name=sessionStorage.getItem('name');
         if (name || authtoken) {
@@ -55,7 +55,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    const authtoken = sessionStorage.getItem("auth-token");
+    const authtoken = sessionStorage.getItem("token");
     const email = sessionStorage.getItem("email");
 
     if (!authtoken || !email) {
@@ -95,7 +95,7 @@ const handleSubmit = async (e) => {
         throw new Error(errorData.message || "Failed to update profile");
 }
   } catch (error) {
-        console.error(error);
+        console.error(error.message);
         // Handle error case
         setChanged("Update failed. Please try again.");
             setTimeout(() => {
