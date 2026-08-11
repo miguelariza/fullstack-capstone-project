@@ -1,6 +1,6 @@
 //Step 1 - Task 2: Import necessary packages
+const { body, validationResult } = require('express-validator');
 const express = require('express');
-import { body, validationResult } from 'express-validator';
 const router = express.Router();
 const connectToDatabase = require('../models/db');
 const bcrypt = require('bcryptjs');

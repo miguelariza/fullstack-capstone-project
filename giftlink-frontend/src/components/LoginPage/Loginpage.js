@@ -10,20 +10,27 @@ function LoginPage() {
     const [ success, setSuccess ] = useState(false);
     const [ error, setError ] = useState(null);
     const [incorrect, setIncorrect] = useState('');
+    const [isLoading, setIsLoading] = useState('');
     
     const navigate = useNavigate();
     const { setIsLoggedIn } = useAppContext();
-    const bearerToken =  () => {
-        const existingToken = sessionStorage.getItem('token');
-        return !!(existingToken && existingToken.trim().length > 0);
-    };
+
+    const existingToken = sessionStorage.getItem('token');
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setError('');
 
-        if(bearerToken()) {
-            setError('Action blocked: You are already logged in with a valid token.');
+        if(!email || !password) {
+            setError('Please fill in all fields');
+            return;
+        }
+
+        setError('');
+        setIsLoading(true);
+
+        if (existingToken && existingToken.trim().length > 0) {
+            setError('You are already logged in.');
+            setIsLoading(false);
             navigate('/app');
             return;
         }
@@ -34,36 +41,40 @@ function LoginPage() {
                 password: password
             };
 
-            let url = `${urlConfig.backendUrl}/api/auth/login`;
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(loginForm)
-            });
+        let url = `${urlConfig.backendUrl}/api/auth/login`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(loginForm)
+        });
 
-            const data = await response.json();
-            if(!response.ok) {
-                const data = await response.json().catch(() => ({}));
-                throw new Error(data.error || 'Login failed. Check your approach.')
-            }
+        const data = await response.json();
+        if(!response.ok) {
+            const data = await response.json().catch(() => ({}));
+            throw new Error(data.error || 'Login failed. Check your approach.')
+        }
 
-            const token = data.token;
-            if(!token) {
-                throw new Error('Authentication failed: Token value is empty.');
-            }
+        console.log(data.firstName);
+        console.log(data.email);
 
-            sessionStorage.setItem('token', token);
-            if(data.email) {
-                sessionStorage.setItem('name', data.firstName);
-                sessionStorage.setItem('email', data.email);
-                setSuccess(true);
-                setIsLoggedIn(true);
-                navigate('/app');
-            }
+        const token = data.token;
+        if(!token) {
+            throw new Error('Authentication failed: Token value is empty.');
+        }
+
+        sessionStorage.setItem('token', token);
+        if(data.email) {
+            sessionStorage.setItem('name', data.firstName);
+            sessionStorage.setItem('email', data.email);
+            setSuccess(true);
+            setIsLoggedIn(true);
+            navigate('/app');
+        }
 
         } catch(error) {
+            console.log('We have a problem.');
             setError(error.message || 'An unexpected error occurred.');
         }
     };
