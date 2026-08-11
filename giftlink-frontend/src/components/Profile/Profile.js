@@ -62,7 +62,7 @@ const handleSubmit = async (e) => {
       navigate("/app/login");
       return;
     }
-
+    //console.log(updatedDetails);
     const payload = { ...updatedDetails };
     const response = await fetch(`${urlConfig.backendUrl}/api/auth/update`, {
         method: 'PUT',
@@ -73,13 +73,13 @@ const handleSubmit = async (e) => {
         body: JSON.stringify(payload)
     });
 
-    //const data = await response.json();
+    console.log(response);
     if (response.ok) {
         // Update the user details in session storage
         //Step 1: Task 4
         sessionStorage.setItem('name', updatedDetails.name);
         //Step 1: Task 5
-        sessionStorage.setItem('email', updatedDetails.mail);
+        sessionStorage.setItem('email', updatedDetails.email);
         setUserDetails(updatedDetails);
         setUserName(updatedDetails.name);
         setEditMode(false);
