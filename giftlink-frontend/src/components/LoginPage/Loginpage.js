@@ -19,13 +19,13 @@ function LoginPage() {
     // Task 5. Create local vars for:
     const navigate = useNavigate();
     const { setIsLoggedIn } = useAppContext();
-    const bearerToken = sessionStorage.getItem('token');
 
     // Task 6. Verify if bearer token has a value
     useEffect(() => {
+        const bearerToken = sessionStorage.getItem('token');
         if(bearerToken && bearerToken.trim().length > 0) {
             navigate('/app');
-        }
+        };
     }, [navigate]);
 
     const handleLogin = async (e) => {
@@ -76,11 +76,13 @@ function LoginPage() {
                 sessionStorage.setItem('name', user.firstName);
                 sessionStorage.setItem('email', user.email);
                 setIsLoggedIn(true);
+                setSuccess(true);
                 navigate('/app');
             } else {
                 document.getElementById('email').value = "";
                 document.getElementById('password').value = "";
                 setIncorrect("Wrong password. Try again.");
+                setSuccess(false);
                 setTimeout(() => {
                     setIncorrect("");
                   }, 2000);

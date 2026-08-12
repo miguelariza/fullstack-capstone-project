@@ -37,7 +37,7 @@ const Profile = () => {
             setUpdatedDetails(storedUserDetails);
         }
     } catch (error) {
-        console.error(error);
+        //console.error(error);
         throw new Error(error || 'Failed store details. Check your approach.') // Handle error case
     }
 };
@@ -58,7 +58,7 @@ const handleSubmit = async (e) => {
   try {
     const authtoken = sessionStorage.getItem("token");
     const email = sessionStorage.getItem("email");
-    console.log(email);
+    //console.log(email);
     if (!authtoken || !email) {
       navigate("/app/login");
       return;
@@ -77,10 +77,10 @@ const handleSubmit = async (e) => {
         body: JSON.stringify(payload)
     });
 
-    console.log('Response status:', response.status);
-    console.log('Response headers:', response.headers);
+    //console.log('Response status:', response.status);
+    //console.log('Response headers:', response.headers);
     const responseText = await response.text();
-    console.log('Response body:', responseText);
+    //console.log('Response body:', responseText);
     if (response.ok) {
         // Update the user details in session storage
         //Step 1: Task 4
