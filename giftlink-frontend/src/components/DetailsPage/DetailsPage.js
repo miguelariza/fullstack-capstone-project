@@ -11,7 +11,7 @@ function DetailsPage() {
     const [error, setError] = useState(null);
 
 	useEffect(() => {
-        const authenticationToken = sessionStorage.getItem('auth-token');
+        const authenticationToken = sessionStorage.getItem('token');
         if (!authenticationToken) {
 			// Task 1: Check for authentication and redirect
             console.error("No token available. No information available.");
@@ -33,7 +33,7 @@ function DetailsPage() {
                     if (response.status === 404) {
                         setError('User not found.');
                     } else if (response.status === 401) {
-                        sessionStorage.removeItem('auth-token');
+                        sessionStorage.removeItem('token');
                         setError('Unauthorized access');
                     } else {
                         throw new Error(`HTTP error! Status: ${response.status}`);

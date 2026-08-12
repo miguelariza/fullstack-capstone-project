@@ -157,7 +157,7 @@ router.put('/update',
             .trim()
             .notEmpty().withMessage('First name is required.')
             .isLength({min: 3, max: 20}).withMessage('First name must be 3-15 characters')
-            .matches(/^[a-zA-Z]+$/).withMessage('Username can only contain letters'),
+            .matches(/^[a-zA-Z ]+$/).withMessage('Username can only contain letters'),
         
         body("email")
             .trim()
@@ -176,20 +176,18 @@ router.put('/update',
             });
         }
 
+        try {
+
         const email = req.headers.email;
         if (!email) {
             logger.error('Email not found in the request headers');
             return res.status(400).json({ error: "Email not found in the request headers" });
         }
 
-        const updatedName = req.body.name;
-
-        try {
         // Connect to database
         const db = await connectToDatabase();
         // Call users collection
         const collection = db.collection('users');
-
         // 3. Does the user already exist?
         const existingUser = await collection.findOne({ email }); 
         if (!existingUser) {
@@ -197,17 +195,20 @@ router.put('/update',
             return res.status(409).json({ error: 'Check credentials.' });
         }
 
+        existingUser.firstName = req.body.name;
+        existingUser.updatedAt = new Date();
+
         // Find and Update
         const updatedUser = await collection.findOneAndUpdate(
-            { email: email },
-            { $set: { firstName: updatedName }},
+            { email },
+            { $set: existingUser },
             { returnDocument: 'after' }
         );
         
         const payload = {
-            firstName: updatedUser.firstName,
-            lastName: updatedUser.lastName,
-            email: updatedUser.email,
+            user: {
+                id: updatedUser._id.toString(),
+            }
         };
 
         const token = jwt.sign(

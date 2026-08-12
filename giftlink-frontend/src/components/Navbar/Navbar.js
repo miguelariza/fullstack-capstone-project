@@ -39,7 +39,7 @@ export default function Navbar() {
         <nav className="navbar navbar-expand-lg navbar-dark">
             <div className="container-fluid">
                 {/* Brand */}
-                <a className="navbar-brand" href={`${urlConfig.backendUrl}/app`}>
+                <a className="navbar-brand" href="/app">
                     <i className="bi bi-gift"></i> GiftLink
                 </a>
 

@@ -12,29 +12,30 @@ const Profile = () => {
 
     const [editMode, setEditMode] = useState(false);
     const navigate = useNavigate();
+
     useEffect(() => {
         const authtoken = sessionStorage.getItem("token");
         if (!authtoken) {
-        navigate("/app/login");
+            navigate("/app/login");
         } else {
-        fetchUserProfile();
+            fetchUserProfile();
         }
     }, [navigate]);
 
     const fetchUserProfile = async () => {
         try {
-        const authtoken = sessionStorage.getItem("token");
-        const email = sessionStorage.getItem("email");
-        const name= sessionStorage.getItem('name');
-        if (name || authtoken) {
-                    const storedUserDetails = {
-                    name: name,
-                    email: email
-                    };
+            const authtoken = sessionStorage.getItem("token");
+            const email = sessionStorage.getItem("email");
+            const name= sessionStorage.getItem('name');
+        if (name && authtoken) {
+            const storedUserDetails = {
+                name: name,
+                email: email
+            };
 
-                    setUserDetails(storedUserDetails);
-                    setUpdatedDetails(storedUserDetails);
-                }
+            setUserDetails(storedUserDetails);
+            setUpdatedDetails(storedUserDetails);
+        }
     } catch (error) {
         console.error(error);
         throw new Error(error || 'Failed store details. Check your approach.') // Handle error case
@@ -57,23 +58,29 @@ const handleSubmit = async (e) => {
   try {
     const authtoken = sessionStorage.getItem("token");
     const email = sessionStorage.getItem("email");
-    //console.log(email);
+    console.log(email);
     if (!authtoken || !email) {
       navigate("/app/login");
       return;
     }
-    //console.log(updatedDetails);
+    
     const payload = { ...updatedDetails };
+
+    console.log('Sending payload:', payload);
     const response = await fetch(`${urlConfig.backendUrl}/api/auth/update`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${authtoken}`
+            'Authorization': `Bearer ${authtoken}`,
+            'email': email
         },
         body: JSON.stringify(payload)
     });
 
-    console.log(response);
+    console.log('Response status:', response.status);
+    console.log('Response headers:', response.headers);
+    const responseText = await response.text();
+    console.log('Response body:', responseText);
     if (response.ok) {
         // Update the user details in session storage
         //Step 1: Task 4
