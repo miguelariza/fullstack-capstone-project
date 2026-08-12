@@ -19,10 +19,10 @@ function LoginPage() {
     // Task 5. Create local vars for:
     const navigate = useNavigate();
     const { setIsLoggedIn } = useAppContext();
+    const bearerToken = sessionStorage.getItem('token');
 
     // Task 6. Verify if bearer token has a value
     useEffect(() => {
-        const bearerToken = sessionStorage.getItem('token');
         if(bearerToken && bearerToken.trim().length > 0) {
             navigate('/app');
         };
