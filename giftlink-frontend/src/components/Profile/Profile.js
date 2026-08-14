@@ -79,7 +79,7 @@ const handleSubmit = async (e) => {
 
     //console.log('Response status:', response.status);
     //console.log('Response headers:', response.headers);
-    const responseText = await response.text();
+    //const responseText = await response.text();
     //console.log('Response body:', responseText);
     if (response.ok) {
         // Update the user details in session storage

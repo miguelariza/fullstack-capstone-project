@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
 import { urlConfig } from '../../config';
 import { useAppContext } from '../../context/AuthContext';
@@ -9,8 +9,8 @@ function RegisterPage() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [ loading, setIsLoading ] = useState(true);
-    const [ error, setError ] = useState(null);
+    const [ setIsLoading ] = useState(true);
+    const [ setError ] = useState(null);
     
     const navigate = useNavigate();
     const { setIsLoggedIn } = useAppContext();
@@ -56,7 +56,7 @@ function RegisterPage() {
             }
 
         } catch(error) {
-            setError(error.message);
+            console.error(error.message);
         } finally {
             setIsLoading(false);
         }

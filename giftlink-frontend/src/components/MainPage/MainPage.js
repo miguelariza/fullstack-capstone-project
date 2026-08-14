@@ -5,7 +5,6 @@ import {urlConfig} from '../../config';
 function MainPage() {
     const [gifts, setGifts] = useState([]);
     const navigate = useNavigate();
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         // Task 1: Write async fetch operation
@@ -19,7 +18,7 @@ function MainPage() {
                 const result = await response.json();
                 setGifts(result);
             } catch(error) {
-                setError(error.message);
+                console.error(error.message);
             }
         };
 

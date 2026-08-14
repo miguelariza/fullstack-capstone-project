@@ -10,8 +10,6 @@ import { useNavigate } from 'react-router-dom';
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [ success, setSuccess ] = useState(false);
-    const [ error, setError ] = useState(null);
 
     // Task 4. State for incorrect password
     const [incorrect, setIncorrect] = useState('');
@@ -23,7 +21,8 @@ function LoginPage() {
 
     // Task 6. Verify if bearer token has a value
     useEffect(() => {
-        if(bearerToken && bearerToken.trim().length > 0) {
+        const authToken = sessionStorage.getItem('token');
+        if(authToken && authToken.trim().length > 0) {
             navigate('/app');
         };
     }, [navigate]);
@@ -76,13 +75,11 @@ function LoginPage() {
                 sessionStorage.setItem('name', user.firstName);
                 sessionStorage.setItem('email', user.email);
                 setIsLoggedIn(true);
-                setSuccess(true);
                 navigate('/app');
             } else {
                 document.getElementById('email').value = "";
                 document.getElementById('password').value = "";
                 setIncorrect("Wrong password. Try again.");
-                setSuccess(false);
                 setTimeout(() => {
                     setIncorrect("");
                   }, 2000);
