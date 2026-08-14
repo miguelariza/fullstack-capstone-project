@@ -37,8 +37,6 @@ function LoginPage() {
               }, 2000);
         }
 
-        setError('');
-
         try {
 
             const loginForm = {
@@ -87,7 +85,7 @@ function LoginPage() {
 
         } catch(error) {
             console.log('We have a problem.');
-            setError(error.message || 'An unexpected error occurred.');
+            console.error(error.message || 'An unexpected error occurred.');
         }
     };
 
