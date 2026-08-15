@@ -9,17 +9,12 @@ function RegisterPage() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [ setIsLoading ] = useState(true);
-    const [ setError ] = useState(null);
     
     const navigate = useNavigate();
     const { setIsLoggedIn } = useAppContext();
 
     const handleRegister = async (e) => {
         e.preventDefault();
-
-        setError('');
-        setIsLoading(true);
 
         const registerForm = {
             firstName: firstName,
@@ -57,8 +52,6 @@ function RegisterPage() {
 
         } catch(error) {
             console.error(error.message);
-        } finally {
-            setIsLoading(false);
         }
     };
 
