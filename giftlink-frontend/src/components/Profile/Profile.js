@@ -26,6 +26,7 @@ const Profile = () => {
         try {
             const authtoken = sessionStorage.getItem("token");
             const email = sessionStorage.getItem("email");
+            console.log(email);
             const name= sessionStorage.getItem('name');
         if (name && authtoken) {
             const storedUserDetails = {

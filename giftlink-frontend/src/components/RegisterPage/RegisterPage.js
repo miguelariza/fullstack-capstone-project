@@ -44,8 +44,9 @@ function RegisterPage() {
             if(data.token) {
                 sessionStorage.setItem('token', data.token);
                 sessionStorage.setItem('name', firstName);
-                sessionStorage.setItem('email', data.email);
+                sessionStorage.setItem('email', email);
                 console.log(sessionStorage.getItem('name'));
+                console.log(sessionStorage.getItem('email'));
                 setIsLoggedIn(true);
                 navigate('/app');
             }
